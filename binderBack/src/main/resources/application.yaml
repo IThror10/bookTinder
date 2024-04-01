@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: rpa
+  datasource:
+    url: TBDURL
+    driverClassName: org.postgresql.Driver
+    username: TBDUSER
+    password: TBDPASSWORD
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+springdoc:
+  swagger-ui:
+    path: /swagger/src
+  api-docs:
+    path: /swagger/docs
+token:
+  signing:
+    key: TBDTOKEN
