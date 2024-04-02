@@ -1,4 +1,4 @@
-package com.example.binder.profile
+package com.example.binder.ui.rv
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -20,7 +20,7 @@ class BookAdapter : RecyclerView.Adapter<BookViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return BookViewHolder(inflater.inflate(R.layout.profile_rv_book_item, parent, false))
+        return BookViewHolder(inflater.inflate(R.layout.book_item, parent, false))
     }
 
     override fun getItemCount(): Int = data.size
@@ -33,7 +33,7 @@ class BookAdapter : RecyclerView.Adapter<BookViewHolder>() {
 
 class BookViewHolder(root: View): RecyclerView.ViewHolder(root) {
 
-    private val bookInfo: TextView = root.findViewById(R.id.profile_rv_book_info)
+    private val bookInfo: TextView = root.findViewById(R.id.book_item_book_info)
 
     @SuppressLint("SetTextI18n")
     fun bind(book: Book) {

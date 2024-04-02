@@ -1,20 +1,17 @@
 package com.example.binder.ui.profile
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.binder.R
 import com.example.binder.databinding.FragmentProfileBinding
 import com.example.binder.model.Book
-import com.example.binder.profile.BookAdapter
+import com.example.binder.model.Profile
+import com.example.binder.ui.rv.BookAdapter
 
 class ProfileFragment : Fragment() {
 

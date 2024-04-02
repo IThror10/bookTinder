@@ -1,4 +1,4 @@
-package com.example.binder.ui.profile
+package com.example.binder.model
 
 import com.example.binder.model.Book
 
