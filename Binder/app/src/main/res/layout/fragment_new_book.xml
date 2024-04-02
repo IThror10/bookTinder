@@ -47,6 +47,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_book_author_name" />
 
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_margin="24dp"
+        android:inputType="textMultiLine"
+        android:hint="@string/book_description"
+        android:gravity="bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_book_location" />
+
     <Button
         android:id="@+id/new_book_submit"
         android:layout_width="0dp"

@@ -22,4 +22,10 @@
         android:name="com.example.binder.ui.newbook.NewBookFragment"
         android:label="@string/menu_new_book"
         tools:layout="@layout/fragment_new_book" />
+
+    <fragment
+        android:id="@+id/nav_swipe"
+        android:name="com.example.binder.ui.swipe.SwipeFragment"
+        android:label="@string/menu_swipe"
+        tools:layout="@layout/fragment_new_book" />
 </navigation>
