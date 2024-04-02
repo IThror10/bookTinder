@@ -1,6 +1,6 @@
-package com.RPA.service;
+package com.binder.service;
 
-import com.RPA.entity.User;
+import com.binder.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

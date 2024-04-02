@@ -1,4 +1,4 @@
-package com.RPA.exception;
+package com.binder.exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) { super(message); }

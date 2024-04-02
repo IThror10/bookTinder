@@ -1,6 +1,6 @@
 spring:
   application:
-    name: rpa
+    name: binderBack
   datasource:
     url: TBDURL
     driverClassName: org.postgresql.Driver

@@ -1,7 +1,7 @@
-package com.RPA.controller;
+package com.binder.controller;
 
-import com.RPA.service.AuthenticationService;
-import com.RPA.service.UserService;
+import com.binder.service.AuthenticationService;
+import com.binder.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

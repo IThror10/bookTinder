@@ -1,8 +1,8 @@
-package com.RPA.controller;
+package com.binder.controller;
 
-import com.RPA.exception.ConflictException;
-import com.RPA.exception.ForbiddenException;
-import com.RPA.exception.NotFoundException;
+import com.binder.exception.ConflictException;
+import com.binder.exception.ForbiddenException;
+import com.binder.exception.NotFoundException;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

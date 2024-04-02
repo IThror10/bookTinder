@@ -1,4 +1,4 @@
-package com.RPA.config;
+package com.binder.config;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -23,14 +23,14 @@ public class SwaggerConfig {
                 .components(new Components())
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .addTagsItem(new io.swagger.v3.oas.models.tags.Tag().name("WebSocket Endpoints"))
-                .info(new Info().title("RPA -- Replace Routine with Robots")
+                .info(new Info().title("binder -- Replace Routine with Robots")
                 .version("1.0.0")
-                .description("RPA Swagger Rest API"))
+                .description("binder Swagger Rest API"))
                 ;
 
 //        return new OpenAPI()
-//                .info(new Info().title("RPA -- Replace Routine with Robots")
+//                .info(new Info().title("binder -- Replace Routine with Robots")
 //                .version("1.0.0")
-//                .description("RPA Swagger Rest API"));
+//                .description("binder Swagger Rest API"));
     }
 }

@@ -1,9 +1,9 @@
-package com.RPA.config;
+package com.binder.config;
 
 
-import com.RPA.entity.User;
-import com.RPA.service.JwtService;
-import com.RPA.service.UserService;
+import com.binder.entity.User;
+import com.binder.service.JwtService;
+import com.binder.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

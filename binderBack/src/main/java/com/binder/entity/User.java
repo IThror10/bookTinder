@@ -1,6 +1,5 @@
-package com.RPA.entity;
+package com.binder.entity;
 
-import com.RPA.entity.num.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,13 +35,9 @@ public class User implements UserDetails {
     @Column(name = "phone", unique = true, nullable = false)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private UserRole role;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority("User"));
     }
 
     @Override
@@ -63,5 +58,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Object getRole() {
+        return null;
     }
 }

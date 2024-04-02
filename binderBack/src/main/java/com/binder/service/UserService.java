@@ -1,8 +1,8 @@
-package com.RPA.service;
+package com.binder.service;
 
-import com.RPA.entity.User;
-import com.RPA.exception.NotFoundException;
-import com.RPA.repository.UserRepository;
+import com.binder.entity.User;
+import com.binder.exception.NotFoundException;
+import com.binder.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
