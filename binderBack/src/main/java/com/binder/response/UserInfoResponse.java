@@ -18,7 +18,5 @@ public class UserInfoResponse {
 
     public UserInfoResponse(User user) {
         login = user.getUsername();
-        email = user.getEmail();
-        phone = user.getPhone();
     }
 }
