@@ -5,17 +5,16 @@ buildscript {
 }
 
 plugins {
-    id 'org.springframework.boot' version '3.0.2'
-    id 'io.spring.dependency-management' version '1.1.4'
     id 'java'
     id 'idea'
     id 'application'
+    id 'org.springframework.boot' version '3.0.2'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 repositories {
     mavenCentral()
 }
-
 
 dependencyManagement {
     imports {
@@ -42,7 +41,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    driver postgresVersion
+//    driver postgresVersion
     runtimeOnly postgresVersion
     implementation postgresVersion
     implementation 'org.apache.commons:commons-lang3'

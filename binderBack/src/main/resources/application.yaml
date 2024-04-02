@@ -2,10 +2,10 @@ spring:
   application:
     name: binderBack
   datasource:
-    url: TBDURL
+    url: jdbc:postgresql://localhost:7777/tinder-book
     driverClassName: org.postgresql.Driver
-    username: TBDUSER
-    password: TBDPASSWORD
+    username: postgres
+    password: postgres
   jpa:
     show-sql: true
     hibernate:
