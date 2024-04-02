@@ -1,4 +1,9 @@
 package com.binder.repository;
 
-public interface BookRepository {
+import com.binder.entity.Book;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BookRepository extends CrudRepository<Book, Long> {
 }
