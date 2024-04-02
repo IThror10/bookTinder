@@ -35,6 +35,10 @@ public class User implements UserDetails {
     @Column(name = "contacts", nullable = false)
     private String contacts;
 
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("User"));
