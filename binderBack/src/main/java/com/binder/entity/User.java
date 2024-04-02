@@ -26,11 +26,14 @@ public class User implements UserDetails {
     @Column(name = "login", unique = true, nullable = false)
     private String username;
 
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
+
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "name", unique = true, nullable = false)
-    private String name;
+    @Column(name = "contacts", nullable = false)
+    private String contacts;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

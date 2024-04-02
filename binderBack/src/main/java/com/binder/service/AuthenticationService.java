@@ -24,6 +24,8 @@ public class AuthenticationService {
         User user = User.builder()
                 .username(request.login())
                 .password(passwordEncoder.encode(request.password()))
+                .name("")
+                .contacts("")
                 .build();
 
         userService.create(user);
