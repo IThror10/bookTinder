@@ -13,7 +13,7 @@
         android:layout_margin="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        android:src="@drawable/avatar_foreground" />
 
     <EditText
         android:id="@+id/profile_name"

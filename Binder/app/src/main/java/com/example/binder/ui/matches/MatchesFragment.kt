@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.binder.databinding.FragmentMatchesBinding
 import com.example.binder.model.Book
-import com.example.binder.ui.rv.BookAdapter
+import com.example.binder.model.Match
+import com.example.binder.ui.rv.MatchAdapter
 
 class MatchesFragment : Fragment() {
 
@@ -18,8 +19,8 @@ class MatchesFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var bookRV: RecyclerView
-    private lateinit var bookAdapter: BookAdapter
+    private lateinit var matchRV: RecyclerView
+    private lateinit var matchAdapter: MatchAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,37 +30,17 @@ class MatchesFragment : Fragment() {
         _binding = FragmentMatchesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        bookAdapter = BookAdapter()
-        bookRV = binding.matchesRvBooks
+        matchAdapter = MatchAdapter(this)
+        matchRV = binding.matchesRvBooks
         updateUI()
         return root
     }
 
     fun updateUI() {
-        bookAdapter.setData(listOf(
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024),
-            Book("Author", "Book", 2024)
-        ))
-        bookRV.layoutManager = LinearLayoutManager(context)
-        bookRV.adapter = bookAdapter
+        val match = Match(Book("My Author", "My Book", 2024), Book("Match Author", "Match Book", 2023))
+        matchAdapter.setData(mutableListOf<Match>().apply { repeat(50) {this.add(match)} })
+        matchRV.layoutManager = LinearLayoutManager(context)
+        matchRV.adapter = matchAdapter
     }
 
     override fun onDestroyView() {

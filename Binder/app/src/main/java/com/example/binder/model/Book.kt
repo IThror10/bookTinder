@@ -5,3 +5,5 @@ class Book(
     val author: String,
     val year: Int
 )
+
+fun Book.toInfoStr(): String = "$author/$name ($year)"

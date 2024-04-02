@@ -15,4 +15,5 @@
     <string name="menu_matches">My Matches</string>
     <string name="menu_new_book">New Book</string>
     <string name="partner_book_name">Partner book name</string>
+    <string name="ok">OK</string>
 </resources>

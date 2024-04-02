@@ -1,6 +1,5 @@
 package com.example.binder.ui.rv
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.binder.R
 import com.example.binder.model.Book
+import com.example.binder.model.toInfoStr
 
 class BookAdapter : RecyclerView.Adapter<BookViewHolder>() {
 
@@ -35,9 +35,8 @@ class BookViewHolder(root: View): RecyclerView.ViewHolder(root) {
 
     private val bookInfo: TextView = root.findViewById(R.id.book_item_book_info)
 
-    @SuppressLint("SetTextI18n")
     fun bind(book: Book) {
-        bookInfo.text = "${book.author}/${book.name} (${book.year})"
+        bookInfo.text = book.toInfoStr()
     }
 
 }
