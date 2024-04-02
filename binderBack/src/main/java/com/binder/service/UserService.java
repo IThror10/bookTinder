@@ -4,6 +4,8 @@ import com.binder.entity.User;
 import com.binder.exception.ConflictException;
 import com.binder.exception.NotFoundException;
 import com.binder.repository.UserRepository;
+import com.binder.request.ChangeUserDataRequest;
+import com.binder.response.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ public class UserService {
 
     public User create(User user) {
         if (repository.existsByUsername(user.getUsername()))
-            throw new ConflictException("Username is already used. Try another one");
+            throw new ConflictException("Login is already used. Try another one");
         return repository.save(user);
     }
 
@@ -24,9 +26,20 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
-    public User getByUserId(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+    public UserInfoResponse getByUserId(Long id) {
+        return new UserInfoResponse(repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found")));
+    }
+
+    public UserInfoResponse updateUserInfo(Long userId, ChangeUserDataRequest request) {
+        User user = repository.findById(userId).orElseThrow(() -> new RuntimeException("Unexpected error"));
+        user.setName(request.name());
+        user.setContacts(request.personal());
+//        user.setYear(request.getYear);
+        if (request.photo() != null)
+            user.setPhoto(request.photo());
+
+        return new UserInfoResponse(repository.save(user));
     }
 
     public UserDetailsService userDetailsService() {

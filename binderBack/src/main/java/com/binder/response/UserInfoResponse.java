@@ -9,14 +9,20 @@ import lombok.Data;
 @AllArgsConstructor
 @Schema(description = "Информация о пользователе")
 public class UserInfoResponse {
-    @Schema(description = "Имя пользователя", example = "Jone")
-    String login;
-    @Schema(description = "Имя пользователя", example = "Jon@gmail.com")
-    String email;
+    @Schema(description = "Идентификатор пользователя", example = "0")
+    Long userId;
+
+    @Schema(description = "Год рождения", example = "2010")
+    Integer year;
+    @Schema(description = "Информация о пользователе", example = "Вы можете связаться со мной в tg @IThror")
+    String personal;
     @Schema(description = "Имя пользователя", example = "8-2000")
-    String phone;
+    String name;
 
     public UserInfoResponse(User user) {
-        login = user.getUsername();
+        userId = user.getId();
+        year = 2000;
+        personal = user.getContacts();
+        name = user.getName();
     }
 }
