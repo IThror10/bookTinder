@@ -2,7 +2,7 @@ spring:
   application:
     name: binderBack
   datasource:
-    url: jdbc:postgresql://localhost:7777/tinder-book
+    url: jdbc:postgresql://81.94.156.182:7777/tinder-book
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres

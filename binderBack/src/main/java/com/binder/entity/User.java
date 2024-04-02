@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name="Reader")
 @Getter
 @Setter
 @Builder
@@ -23,11 +23,14 @@ public class User implements UserDetails {
     @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "nickname", unique = true, nullable = false)
+    @Column(name = "login", unique = true, nullable = false)
     private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
