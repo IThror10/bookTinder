@@ -16,4 +16,10 @@
     <string name="menu_new_book">New Book</string>
     <string name="partner_book_name">Partner book name</string>
     <string name="ok">OK</string>
+    <string name="book_name">Book name</string>
+    <string name="name">Name</string>
+    <string name="year">Year</string>
+    <string name="submit">Submit</string>
+    <string name="author_name">Author Name</string>
+    <string name="our_location">Our location</string>
 </resources>
