@@ -2,6 +2,7 @@ package com.example.binder.ui.profile
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,8 @@ import com.example.binder.app.BinderApplication
 import com.example.binder.currentUser
 import com.example.binder.databinding.FragmentProfileBinding
 import com.example.binder.bearer
-import com.example.binder.ui.rv.BookAdapter
-import com.example.binder.userBooks
+import com.example.binder.ui.rv.GiveawayAdapter
+import com.example.binder.userGiveaways
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -31,7 +32,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var bookRV: RecyclerView
-    private lateinit var bookAdapter: BookAdapter
+    private lateinit var giveawayAdapter: GiveawayAdapter
     private lateinit var profileName: EditText
     private lateinit var profilePersonal: EditText
 
@@ -47,7 +48,7 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        bookAdapter = BookAdapter()
+        giveawayAdapter = GiveawayAdapter()
         bookRV = binding.profileRvBooks
         profileName = binding.profileName
         profilePersonal = binding.profilePersonalInfo
@@ -86,15 +87,28 @@ class ProfileFragment : Fragment() {
                 }, { ErrorUtils.showMessage(it, this.requireContext()) })
         }
         updateUI()
+        getGiveaways()
         return root
+    }
+
+    @SuppressLint("CheckResult")
+    private fun getGiveaways() {
+        BinderApplication.instance.binderApi.getGiveaways(bearer())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                userGiveaways = it
+                Log.i("Get giveaways!", it.toString())
+                updateUI()
+            }, { ErrorUtils.showMessage(it, this.requireContext()) })
     }
 
     private fun updateUI() {
         profileName.setText(currentUser.name)
         profilePersonal.setText(currentUser.personal)
-        bookAdapter.setData(userBooks)
+        giveawayAdapter.setData(userGiveaways)
         bookRV.layoutManager = LinearLayoutManager(context)
-        bookRV.adapter = bookAdapter
+        bookRV.adapter = giveawayAdapter
     }
 
     override fun onDestroyView() {

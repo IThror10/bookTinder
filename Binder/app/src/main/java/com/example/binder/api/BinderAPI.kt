@@ -40,6 +40,11 @@ interface BinderAPI {
         @Header("Authorization") token: String,
         @Body req: Giveaway
     ): Single<Giveaway>
+
+    @GET("user/book")
+    fun getGiveaways(
+        @Header("Authorization") token: String
+    ): Single<List<Giveaway>>
 }
 
 data class RegisterUserReq(

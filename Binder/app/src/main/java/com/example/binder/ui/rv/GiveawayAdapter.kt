@@ -7,13 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.binder.R
 import com.example.binder.model.Book
+import com.example.binder.model.Giveaway
 import com.example.binder.model.toInfoStr
 
-class BookAdapter : RecyclerView.Adapter<BookViewHolder>() {
+class GiveawayAdapter : RecyclerView.Adapter<BookViewHolder>() {
 
-    private var data: List<Book> = listOf()
+    private var data: List<Giveaway> = listOf()
 
-    fun setData(data: List<Book>) {
+    fun setData(data: List<Giveaway>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -26,7 +27,7 @@ class BookAdapter : RecyclerView.Adapter<BookViewHolder>() {
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val book = data[position]
+        val book = data[position].book
         holder.bind(book)
     }
 }
