@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,5 +57,14 @@ public class GiveAwayService {
         return giveAwayRepository.findAllByUser(user).stream()
                 .map(GiveAwayResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    public List<GiveAwayResponse> getAvailableAdvertisements(Long uid) {
+        Set<GiveAway> found = giveAwayRepository.getAvailableGiveAway(uid);
+        return found.stream().map(GiveAwayResponse::new).collect(Collectors.toList());
+//        Set<GiveAwayResponse> likedUs = matchResultRepository.likedUs(uid);
+//        return likedUs.stream()
+//                .filter(el -> found.stream().anyMatch(cur -> cur.getId().equals(el.getId())))
+//                .collect(Collectors.toSet());
     }
 }

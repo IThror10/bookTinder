@@ -57,4 +57,22 @@ public class GiveAwayController {
         return ResponseEntity.ok(service.getGiveAwayByUser(userId));
     }
 
+
+    @Operation(summary = "Returns others' advertisements")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Advertisements for authorized user",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GiveAwayResponse.class)))
+                    }),
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping(value = "/recommend", produces = {"application/json"})
+    public ResponseEntity getSwipes (
+            @RequestAttribute("uid") Long userId
+    ) {
+        return ResponseEntity.ok(service.getAvailableAdvertisements(userId));
+    }
 }
