@@ -94,7 +94,7 @@ public class UserController {
                     content = @Content)
     })
     @SecurityRequirement(name = "Bearer Authentication")
-    @GetMapping(value = "/user", produces = {"application/json"})
+    @GetMapping(value = "", produces = {"application/json"})
     public ResponseEntity<UserInfoResponse> getMyInfo(
             @RequestAttribute("uid") Long userId
     ) {

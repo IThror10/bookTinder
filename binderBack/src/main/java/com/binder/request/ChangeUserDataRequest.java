@@ -2,6 +2,7 @@ package com.binder.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Null;
 
 @Schema(description = "Изменение данных пользователя")
 public record ChangeUserDataRequest (
@@ -16,6 +17,6 @@ public record ChangeUserDataRequest (
         @Schema(description = "Год рождения", example = "2010")
         Integer year,
 
-        @Schema(description = "Фотография")
+        @Schema(description = "Фотография", nullable = true)
         byte[] photo
 ) {}

@@ -2,9 +2,11 @@ package com.binder.response;
 
 import com.binder.entity.Book;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 @Schema(description = "Информация о книге")
 public class BookResponse {
     @Schema(description = "Id книги")
@@ -20,12 +22,13 @@ public class BookResponse {
     private String edition;
 
     @Schema(description = "Описание книги")
-    private String bookDescription;
+    private String description;
 
     BookResponse(Book book) {
+        id = book.getId();
         title = book.getTitle();
         author = book.getAuthor();
         edition = book.getEdition();
-        bookDescription = book.getDescription();
+        description = book.getDescription();
     }
 }
