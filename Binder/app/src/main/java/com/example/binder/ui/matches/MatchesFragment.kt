@@ -37,7 +37,10 @@ class MatchesFragment : Fragment() {
     }
 
     fun updateUI() {
-        val match = Match(Book("My Author", "My Book", 2024), Book("Match Author", "Match Book", 2023))
+        val match = Match(
+            Book(-1, "My Book", "My Author", 2024, "Good Book"),
+            Book(-1, "Match Book", "Match Author", 1984, "Another Good Book")
+        )
         matchAdapter.setData(mutableListOf<Match>().apply { repeat(50) {this.add(match)} })
         matchRV.layoutManager = LinearLayoutManager(context)
         matchRV.adapter = matchAdapter

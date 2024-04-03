@@ -1,9 +1,13 @@
 package com.example.binder.model
 
-class Book(
-    val name: String,
-    val author: String,
-    val year: Int
+import com.squareup.moshi.Json
+
+data class Book(
+    @field:Json(name = "id") val id: Long,
+    @field:Json(name = "title") val title: String,
+    @field:Json(name = "author") val author: String,
+    @field:Json(name = "year") val year: Int,
+    @field:Json(name = "description") val description: String
 )
 
-fun Book.toInfoStr(): String = "$author/$name ($year)"
+fun Book.toInfoStr(): String = "$author/$title ($year)"

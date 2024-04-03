@@ -2,7 +2,6 @@ package com.example.binder
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import com.example.binder.app.BinderApplication
 import com.example.binder.model.Book
 import com.example.binder.model.UserData
@@ -13,26 +12,20 @@ lateinit var userToken: String
 lateinit var currentUser: UserData
 
 var userBooks: List<Book> = listOf(
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024),
-    Book("Author", "Book", 2024)
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
+    Book(-1, "Book", "Author", 2024, "Good Book"),
 )
 
 fun bearer() = "Bearer $userToken"

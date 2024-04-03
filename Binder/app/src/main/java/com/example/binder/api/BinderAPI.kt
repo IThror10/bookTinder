@@ -1,5 +1,7 @@
 package com.example.binder.api
 
+import com.example.binder.model.Book
+import com.example.binder.model.Giveaway
 import com.example.binder.model.UserData
 import com.squareup.moshi.Json
 import io.reactivex.Single
@@ -32,6 +34,12 @@ interface BinderAPI {
         @Header("Authorization") token: String,
         @Body req: UpdateUserRequest
     ): Single<UserData>
+
+    @POST("user/book")
+    fun createGiveaway(
+        @Header("Authorization") token: String,
+        @Body req: Giveaway
+    ): Single<Giveaway>
 }
 
 data class RegisterUserReq(

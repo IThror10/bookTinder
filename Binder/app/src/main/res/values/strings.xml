@@ -7,7 +7,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Binder</string>
-    <string name="nav_header_subtitle">Connecting people</string>
+    <string name="nav_header_subtitle">Tinder but for books</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -16,12 +16,12 @@
     <string name="menu_new_book">New Book</string>
     <string name="partner_book_name">Partner book name</string>
     <string name="ok">OK</string>
-    <string name="book_name">Book name</string>
+    <string name="book_title">Book Title</string>
     <string name="name">Name</string>
     <string name="year">Year</string>
     <string name="submit">Submit</string>
     <string name="author_name">Author Name</string>
-    <string name="our_location">Our location</string>
+    <string name="giveaway_location">Giveaway location</string>
 
 
     <string name="hint_log">Username</string>
@@ -36,4 +36,5 @@
     <string name="like">Like</string>
     <string name="book_description">Book Description</string>
     <string name="menu_swipe">Swipe</string>
+    <string name="giveaway_description">Giveaway description</string>
 </resources>
