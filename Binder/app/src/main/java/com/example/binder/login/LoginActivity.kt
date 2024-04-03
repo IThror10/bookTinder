@@ -11,6 +11,7 @@ import com.example.binder.MainActivity
 import com.example.binder.R
 import com.example.binder.api.LoginUserReq
 import com.example.binder.app.BinderApplication
+import com.example.binder.currentUser
 import com.example.binder.register.NewUserActivity
 import com.example.binder.userToken
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
                 .subscribe({
                     val intent = Intent(this, MainActivity::class.java)
                     userToken = it.jsonAuth
+                    currentUser = it.userData
                     startActivity(intent)
                     finish()
                 }, { ErrorUtils.showMessage(it, this) })
