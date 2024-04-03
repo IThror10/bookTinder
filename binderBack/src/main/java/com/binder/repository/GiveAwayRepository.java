@@ -16,7 +16,7 @@ public interface GiveAwayRepository extends CrudRepository<GiveAway, Long> {
     List<GiveAway> findAllByUser (User user);
 
     @Transactional
-    @Query("SELECT g FROM GiveAway g WHERE g.id NOT IN " +
+    @Query("SELECT g FROM GiveAway g WHERE g.user.id != :userId and g.id NOT IN " +
             "(SELECT m.giveaway.id FROM MatchResult m WHERE m.user.id = :userId) and " +
             "g.book.id NOT IN (SELECT h.book.id FROM UserStory h WHERE h.user.id = :userId)" +
             " ORDER BY id LIMIT 30")

@@ -2,6 +2,7 @@ package com.binder.controller;
 
 import com.binder.request.GiveAwayRequest;
 import com.binder.response.GiveAwayResponse;
+import com.binder.response.MatchResponse;
 import com.binder.service.GiveAwayService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -75,6 +76,7 @@ public class GiveAwayController {
     ) {
         return ResponseEntity.ok(service.getAvailableAdvertisements(userId));
     }
+
     @Operation(summary = "Swipe left or right giveaway advertisement")
     @ApiResponses(value = {
             @ApiResponse(
@@ -97,4 +99,21 @@ public class GiveAwayController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Returns users' matches")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Advertisements for authorized user",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = MatchResponse.class)))
+                    }),
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping(value = "/recommend/match", produces = {"application/json"})
+    public ResponseEntity getMatches (
+            @RequestAttribute("uid") Long userId
+    ) {
+        return ResponseEntity.ok(service.getMatches(userId));
+    }
 }

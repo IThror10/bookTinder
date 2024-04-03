@@ -11,6 +11,7 @@ import com.binder.repository.GiveAwayRepository;
 import com.binder.repository.MatchResultRepository;
 import com.binder.request.GiveAwayRequest;
 import com.binder.response.GiveAwayResponse;
+import com.binder.response.MatchResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -94,5 +95,10 @@ public class GiveAwayService {
                 .build();
 
         matchResultRepository.save(matchResult);
+    }
+
+    @Transactional
+    public List<MatchResponse> getMatches(Long uid) {
+        return matchResultRepository.getMatches(uid);
     }
 }

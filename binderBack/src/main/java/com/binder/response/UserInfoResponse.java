@@ -19,6 +19,9 @@ public class UserInfoResponse {
     @Schema(description = "Имя пользователя", example = "8-2000")
     String name;
 
+    @Schema(description = "Фотография пользователя")
+    byte[] photo;
+
     public UserInfoResponse(User user) {
         userId = user.getId();
         year = 2000;
