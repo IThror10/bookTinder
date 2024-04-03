@@ -62,7 +62,7 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        giveawayAdapter = GiveawayAdapter()
+        giveawayAdapter = GiveawayAdapter(this.requireContext())
         bookRV = binding.profileRvBooks
         profileName = binding.profileName
         profilePersonal = binding.profilePersonalInfo
