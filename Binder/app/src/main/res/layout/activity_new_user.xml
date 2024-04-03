@@ -41,7 +41,7 @@
         android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/hint_personal"
+        android:hint="@string/hint_personal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -52,8 +52,8 @@
         android:layout_marginStart="46dp"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:inputType="text"
-        android:text="@string/hint_year"
+        android:inputType="number"
+        android:hint="@string/hint_year"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personal" />
 
@@ -65,7 +65,7 @@
         android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/login"
+        android:hint="@string/login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/year" />
 
@@ -76,8 +76,8 @@
         android:layout_marginStart="46dp"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:inputType="text"
-        android:text="@string/hint_pas"
+        android:inputType="textPassword"
+        android:hint="@string/hint_pas"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login" />
 
