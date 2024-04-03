@@ -77,6 +77,8 @@ public class GiveAwayController {
         return ResponseEntity.ok(service.getAvailableAdvertisements(userId));
     }
 
+
+
     @Operation(summary = "Swipe left or right giveaway advertisement")
     @ApiResponses(value = {
             @ApiResponse(
@@ -84,8 +86,8 @@ public class GiveAwayController {
                     description = "Swipe left or right was successful",
                     content = @Content),
             @ApiResponse(
-                    responseCode = "400",
-                    description = "Wrong request",
+                    responseCode = "404",
+                    description = "Giveaway Not Found",
                     content = @Content)
     })
     @SecurityRequirement(name = "Bearer Authentication")
@@ -115,5 +117,27 @@ public class GiveAwayController {
             @RequestAttribute("uid") Long userId
     ) {
         return ResponseEntity.ok(service.getMatches(userId));
+    }
+
+    @Operation(summary = "Rate book")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Book was rated successfully",
+                    content = @Content),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Book Not Found",
+                    content = @Content)
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @PostMapping(value = "/{bookId}", produces = {"application/json"})
+    public ResponseEntity rateBook (
+            @RequestAttribute("uid") Long userId,
+            @PathVariable Long bookId,
+            @RequestBody Boolean like
+    ) {
+        service.rateBook(userId, bookId, like);
+        return ResponseEntity.noContent().build();
     }
 }

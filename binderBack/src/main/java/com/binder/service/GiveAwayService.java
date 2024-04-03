@@ -1,14 +1,12 @@
 package com.binder.service;
 
 
-import com.binder.entity.Book;
-import com.binder.entity.GiveAway;
-import com.binder.entity.MatchResult;
-import com.binder.entity.User;
+import com.binder.entity.*;
 import com.binder.exception.NotFoundException;
 import com.binder.repository.BookRepository;
 import com.binder.repository.GiveAwayRepository;
 import com.binder.repository.MatchResultRepository;
+import com.binder.repository.UserStoryRepository;
 import com.binder.request.GiveAwayRequest;
 import com.binder.response.GiveAwayResponse;
 import com.binder.response.MatchResponse;
@@ -27,6 +25,7 @@ public class GiveAwayService {
     private final GiveAwayRepository giveAwayRepository;
     private final BookRepository bookRepository;
     private final MatchResultRepository matchResultRepository;
+    private final UserStoryRepository userStoryRepository;
 
 //    @Transactional
 //    public Book addBook(BookRequest request) {
@@ -82,7 +81,6 @@ public class GiveAwayService {
 
     @Transactional
     public void swipeGiveAway(Long uid, Long giveAwayId, boolean like) {
-        System.out.println(giveAwayId);
         User user = User.builder().id(uid).build();
         GiveAway giveAway = giveAwayRepository
                 .findById(giveAwayId)
@@ -100,5 +98,22 @@ public class GiveAwayService {
     @Transactional
     public List<MatchResponse> getMatches(Long uid) {
         return matchResultRepository.getMatches(uid);
+    }
+
+    @Transactional
+    public void rateBook(Long uid, Long bid, boolean like) {
+        User user = User.builder().id(uid).build();
+        Book book = bookRepository
+                .findById(bid)
+                .orElseThrow(() -> new NotFoundException("Book Not Found"));
+
+        UserStory userStory = UserStory
+                .builder()
+                .user(user)
+                .book(book)
+                .liked(like)
+                .build();
+
+        userStoryRepository.save(userStory);
     }
 }
