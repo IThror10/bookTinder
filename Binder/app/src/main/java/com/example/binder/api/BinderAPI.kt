@@ -10,6 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 
 interface BinderAPI {
@@ -45,6 +46,12 @@ interface BinderAPI {
     fun getGiveaways(
         @Header("Authorization") token: String
     ): Single<List<Giveaway>>
+
+    @GET("api/book/{name}")
+    fun getSuggestedBooks(
+        @Header("Authorization") token: String,
+        @Path("name") name: String
+    ): Single<List<Book>>
 }
 
 data class RegisterUserReq(
