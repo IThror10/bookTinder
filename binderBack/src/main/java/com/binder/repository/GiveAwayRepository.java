@@ -2,6 +2,7 @@ package com.binder.repository;
 
 import com.binder.entity.GiveAway;
 import com.binder.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +15,7 @@ import java.util.Set;
 public interface GiveAwayRepository extends CrudRepository<GiveAway, Long> {
     List<GiveAway> findAllByUser (User user);
 
+    @Transactional
     @Query("SELECT g FROM GiveAway g WHERE g.id NOT IN " +
             "(SELECT m.giveaway.id FROM MatchResult m WHERE m.user.id = :userId) and " +
             "g.book.id NOT IN (SELECT h.book.id FROM UserStory h WHERE h.user.id = :userId)" +

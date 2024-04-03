@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "MatchResult")
+@Table(name = "Matchresult")
 @Getter
 @Setter
 @Builder

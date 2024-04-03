@@ -75,4 +75,26 @@ public class GiveAwayController {
     ) {
         return ResponseEntity.ok(service.getAvailableAdvertisements(userId));
     }
+    @Operation(summary = "Swipe left or right giveaway advertisement")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Swipe left or right was successful",
+                    content = @Content),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Wrong request",
+                    content = @Content)
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @PostMapping(value = "/recommend/{giveAwayId}", produces = {"application/json"})
+    public ResponseEntity swipeGiveAway (
+            @RequestAttribute("uid") Long userId,
+            @PathVariable Long giveAwayId,
+            @RequestBody Boolean like
+    ) {
+        service.swipeGiveAway(userId, giveAwayId, like);
+        return ResponseEntity.noContent().build();
+    }
+
 }
