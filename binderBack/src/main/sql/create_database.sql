@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS MatchResult (
     giveaway_id INT,
     user_id INT,
     liked BOOLEAN NOT NULL,
-    time TIMESTAMP NOT NULL,
+--    time TIMESTAMP DEFAULT now(),
     FOREIGN KEY (giveaway_id) REFERENCES GiveAway(id),
     FOREIGN KEY (user_id) REFERENCES Reader(id)
 );
@@ -44,16 +44,16 @@ CREATE TABLE IF NOT EXISTS UserStory (
     FOREIGN KEY (user_id) REFERENCES Reader(id)
 );
 
-CREATE TABLE IF NOT EXISTS Genre (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS BookGenre (
-    id SERIAL PRIMARY KEY,
-    book INT,
-    genre INT,
-    FOREIGN KEY (book) REFERENCES Book(id),
-    FOREIGN KEY (genre) REFERENCES Genre(id)
-);
+--CREATE TABLE IF NOT EXISTS Genre (
+--    id SERIAL PRIMARY KEY,
+--    name VARCHAR(255) NOT NULL
+--);
+--
+--CREATE TABLE IF NOT EXISTS BookGenre (
+--    id SERIAL PRIMARY KEY,
+--    book INT,
+--    genre INT,
+--    FOREIGN KEY (book) REFERENCES Book(id),
+--    FOREIGN KEY (genre) REFERENCES Genre(id)
+--);
 
