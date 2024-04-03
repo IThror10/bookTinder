@@ -13,7 +13,7 @@
         android:layout_margin="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/avatar_foreground" />
+        android:src="@drawable/avatar" />
 
     <EditText
         android:id="@+id/profile_name"
@@ -62,6 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageView
         android:id="@+id/profile_save_icon"
         android:layout_width="wrap_content"
@@ -70,5 +71,7 @@
         android:layout_margin="24dp"
         app:layout_constraintStart_toEndOf="@+id/profile_edit_icon"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

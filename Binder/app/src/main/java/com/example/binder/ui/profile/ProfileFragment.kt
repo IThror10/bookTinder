@@ -23,6 +23,14 @@ import com.example.binder.userGiveaways
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
+
+
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.provider.MediaStore
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
@@ -39,6 +47,12 @@ class ProfileFragment : Fragment() {
     private lateinit var editIcon: ImageView
     private lateinit var saveIcon: ImageView
 
+
+    private lateinit var profilePhotoImageView: ImageView
+    companion object {
+        private const val REQUEST_CODE_PICK_IMAGE = 1
+        private const val REQUEST_CODE_TAKE_PICTURE = 2
+    }
     @SuppressLint("CheckResult")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +66,8 @@ class ProfileFragment : Fragment() {
         bookRV = binding.profileRvBooks
         profileName = binding.profileName
         profilePersonal = binding.profilePersonalInfo
+
+        profilePhotoImageView = binding.profilePhoto // мое
 
         editIcon = binding.profileEditIcon
         saveIcon = binding.profileSaveIcon
@@ -88,6 +104,10 @@ class ProfileFragment : Fragment() {
         }
         updateUI()
         getGiveaways()
+        profilePhotoImageView.setOnClickListener {
+            openImageSourceSelectionDialog()
+        }
+
         return root
     }
 
@@ -114,6 +134,47 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun openImageSourceSelectionDialog() {
+        val items = arrayOf("Gallery", "Camera")
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Select Image Source")
+            .setItems(items) { _, which ->
+                when (which) {
+                    0 -> openGallery()
+                    1 -> openCamera()
+                }
+            }
+            .show()
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE)
+    }
+
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_CODE_PICK_IMAGE -> {
+                    data?.data?.let { uri ->
+                        profilePhotoImageView.setImageURI(uri)
+                    }
+                }
+                REQUEST_CODE_TAKE_PICTURE -> {
+                    val imageBitmap = data?.extras?.get("data") as Bitmap?
+                    imageBitmap?.let {
+                        profilePhotoImageView.setImageBitmap(it)
+                    }
+                }
+            }
+        }
     }
 }
 

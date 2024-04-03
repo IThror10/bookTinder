@@ -52,6 +52,8 @@ interface BinderAPI {
         @Header("Authorization") token: String,
         @Path("name") name: String
     ): Single<List<Book>>
+
+
 }
 
 data class RegisterUserReq(
@@ -60,6 +62,8 @@ data class RegisterUserReq(
     @field:Json(name = "password") val password: String,
     @field:Json(name = "personal") val personal: String,
     @field:Json(name = "year") val year: Int,
+
+
 )
 
 data class LoginUserReq(
