@@ -22,13 +22,13 @@ public class BookResponse {
     private String edition;
 
     @Schema(description = "Описание книги")
-    private String bookDescription;
+    private String description;
 
     BookResponse(Book book) {
         id = book.getId();
         title = book.getTitle();
         author = book.getAuthor();
         edition = book.getEdition();
-        bookDescription = book.getDescription();
+        description = book.getDescription();
     }
 }
