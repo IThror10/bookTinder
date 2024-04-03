@@ -1,5 +1,6 @@
 package com.binder.repository;
 
+import com.binder.entity.GiveAway;
 import com.binder.entity.MatchResult;
 import com.binder.response.MatchResponse;
 import jakarta.transaction.Transactional;
@@ -17,4 +18,6 @@ public interface MatchResultRepository extends CrudRepository<MatchResult, Long>
         "FROM MatchResult m1 JOIN MatchResult m2 on m1.user.id = :userId " +
         "and m1.user.id = m2.giveaway.user.id")
     List<MatchResponse> getMatches(@Param("userId") Long userId);
+
+    void deleteAllByGiveaway(GiveAway giveAway);
 }

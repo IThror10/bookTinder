@@ -2,6 +2,8 @@ package com.binder.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "Matchresult")
@@ -17,6 +19,7 @@ public class MatchResult {
 
     @ManyToOne
     @JoinColumn(name = "giveaway_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private GiveAway giveaway;
 
     @ManyToOne
@@ -25,7 +28,4 @@ public class MatchResult {
 
     @Column(name = "liked")
     private boolean liked;
-
-    @Column(name = "time", columnDefinition = "TIMESTAMP")
-    private java.sql.Timestamp time;
 }

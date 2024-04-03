@@ -140,4 +140,29 @@ public class GiveAwayController {
         service.rateBook(userId, bookId, like);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "Delete giveaway")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Giveaway was deleted successfully",
+                    content = @Content),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "GiveAway Not Found",
+                    content = @Content),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content)
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @DeleteMapping(value = "/{giveAwayId}", produces = {"application/json"})
+    public ResponseEntity rateBook (
+            @RequestAttribute("uid") Long userId,
+            @PathVariable Long giveAwayId
+    ) {
+        service.deleteGiveAway(userId, giveAwayId);
+        return ResponseEntity.noContent().build();
+    }
 }

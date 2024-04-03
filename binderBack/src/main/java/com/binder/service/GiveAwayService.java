@@ -2,11 +2,13 @@ package com.binder.service;
 
 
 import com.binder.entity.*;
+import com.binder.exception.ForbiddenException;
 import com.binder.exception.NotFoundException;
 import com.binder.repository.BookRepository;
 import com.binder.repository.GiveAwayRepository;
 import com.binder.repository.MatchResultRepository;
 import com.binder.repository.UserStoryRepository;
+import com.binder.request.BookRequest;
 import com.binder.request.GiveAwayRequest;
 import com.binder.response.GiveAwayResponse;
 import com.binder.response.MatchResponse;
@@ -27,28 +29,36 @@ public class GiveAwayService {
     private final MatchResultRepository matchResultRepository;
     private final UserStoryRepository userStoryRepository;
 
-//    @Transactional
-//    public Book addBook(BookRequest request) {
-//
-//    }
-
     @Transactional
-    public GiveAwayResponse addGiveAway(Long uid, GiveAwayRequest request) {
-        User user = User.builder().id(uid).build();
-        Book book = Book.builder()
-                .id(request.book().id())
-                .description(request.book().description())
-                .author(request.book().author())
-                .title(request.book().title())
-                .edition(request.book().edition())
-                .build();
+    public Book addBook(BookRequest request) {
 
-        Optional<Book> optionalBook = bookRepository.findById(request.book().id());
+        Optional<Book> optionalBook = bookRepository.findByTitleAndAuthorAndDescriptionAndEdition(
+                request.title(),
+                request.author(),
+                request.description(),
+                request.edition()
+        );
+        Book book;
+
         if (optionalBook.isEmpty()) {
+            book = Book.builder()
+                    .description(request.description())
+                    .author(request.author())
+                    .title(request.title())
+                    .edition(request.edition())
+                    .build();
             book = bookRepository.save(book);
         } else {
             book = optionalBook.get();
         }
+
+        return book;
+    }
+
+    @Transactional
+    public GiveAwayResponse addGiveAway(Long uid, GiveAwayRequest request) {
+        User user = User.builder().id(uid).build();
+        Book book = addBook(request.book());
 
         GiveAway giveAway = GiveAway.builder()
                 .book(book)
@@ -115,5 +125,19 @@ public class GiveAwayService {
                 .build();
 
         userStoryRepository.save(userStory);
+    }
+
+    @Transactional
+    public void deleteGiveAway(Long uid, Long gid) {
+        GiveAway giveAway = giveAwayRepository
+                .findById(gid)
+                .orElseThrow(() -> new NotFoundException("Advertisement Not Found"));
+
+        if (!giveAway.getUser().getId().equals(uid)) {
+            throw new ForbiddenException("User cannot delete advertisement of another user");
+        }
+
+        matchResultRepository.deleteAllByGiveaway(giveAway);
+        giveAwayRepository.delete(giveAway);
     }
 }
