@@ -22,9 +22,11 @@ import com.example.binder.ui.rv.GiveawayAdapter
 import com.example.binder.userGiveaways
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-
-
-
+import android.widget.Toast
+import java.io.ByteArrayOutputStream
+import android.net.Uri
+import android.graphics.BitmapFactory
+import java.io.FileNotFoundException
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -164,19 +166,49 @@ class ProfileFragment : Fragment() {
             when (requestCode) {
                 REQUEST_CODE_PICK_IMAGE -> {
                     data?.data?.let { uri ->
-                        profilePhotoImageView.setImageURI(uri)
+                        val imageBitmap = getImageBitmap(uri)
+                        imageBitmap?.let {
+                            if (checkImageSize(it)) {
+                                profilePhotoImageView.setImageBitmap(it)
+                            } else {
+                                Toast.makeText(requireContext(), "Image size should not exceed 5 MB", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 }
                 REQUEST_CODE_TAKE_PICTURE -> {
                     val imageBitmap = data?.extras?.get("data") as Bitmap?
                     imageBitmap?.let {
-                        profilePhotoImageView.setImageBitmap(it)
+                        if (checkImageSize(it)) {
+                            profilePhotoImageView.setImageBitmap(it)
+                        } else {
+                            Toast.makeText(requireContext(), "Image size should not exceed 5 MB", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
         }
     }
+
+    private fun getImageBitmap(uri: Uri): Bitmap? {
+        return try {
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            BitmapFactory.decodeStream(inputStream)
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private fun checkImageSize(imageBitmap: Bitmap): Boolean {
+        val outputStream = ByteArrayOutputStream()
+        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        val byteArray = outputStream.toByteArray()
+        val imageSizeInMb = byteArray.size / (1024.0 * 1024.0)
+        return imageSizeInMb <= 5
+    }
 }
+
 
 fun EditText.setEditable(editable: Boolean) {
     this.isClickable = editable
