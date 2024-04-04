@@ -84,5 +84,15 @@
         app:layout_constraintStart_toStartOf="@+id/profile_rv_books"
         app:layout_constraintTop_toTopOf="@+id/profile_rv_books" />
 
+    <ProgressBar
+        android:id="@+id/giveaways_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_rv_books"
+        app:layout_constraintEnd_toEndOf="@+id/profile_rv_books"
+        app:layout_constraintStart_toStartOf="@+id/profile_rv_books"
+        app:layout_constraintTop_toTopOf="@+id/profile_rv_books" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

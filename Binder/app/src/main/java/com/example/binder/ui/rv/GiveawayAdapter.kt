@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -70,9 +71,15 @@ class GiveawayAdapter(
         val giveawayDescET: TextView = view.findViewById(R.id.new_book_giveaway_description)
         val bookPhoto: ImageView = view.findViewById(R.id.new_book_photo)
 
+        bookTitleET.movementMethod = ScrollingMovementMethod()
+        bookAuthorET.movementMethod = ScrollingMovementMethod()
+        bookYearET.movementMethod = ScrollingMovementMethod()
+        bookDescET.movementMethod = ScrollingMovementMethod()
+        giveawayDescET.movementMethod = ScrollingMovementMethod()
+
         bookTitleET.text = giveaway.book.title
         bookAuthorET.text = giveaway.book.author
-        bookYearET.text = giveaway.book.year.toString()
+        if(giveaway.book.year != null) bookYearET.text = giveaway.book.year.toString()
         bookDescET.text = giveaway.book.description
         giveawayDescET.text = giveaway.description
         bookPhoto.setBitmap(giveaway.photo)

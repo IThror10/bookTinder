@@ -123,9 +123,8 @@ class NewBookFragment : Fragment() {
     }
 
     private fun updateUI(books: List<Book>) {
-        if (books.size == 1 &&
-            books[0].title == bookTitleET.str() &&
-            books[0].author == bookAuthorET.str()
+        if ((books.size == 1 && books[0].title == bookTitleET.str() && books[0].author == bookAuthorET.str())
+            || bookTitleET.text.isBlank()
         ) bookAdapter.setData(listOf())
         else bookAdapter.setData(books)
         suggestRV.layoutManager = LinearLayoutManager(context)
@@ -136,7 +135,7 @@ class NewBookFragment : Fragment() {
         bookSet = true
         bookTitleET.setText(book.title)
         bookAuthorET.setText(book.author)
-        bookYearET.setText(book.year.toString())
+        if (book.year != null) bookYearET.setText(book.year.toString())
         bookDescET.setText(book.description)
         updateUI(listOf())
     }

@@ -90,7 +90,7 @@ data class RegisterUserReq(
     @field:Json(name = "login") val login: String,
     @field:Json(name = "name") val name: String,
     @field:Json(name = "password") val password: String,
-    @field:Json(name = "personal") val personal: String,
+    @field:Json(name = "contacts") val personal: String,
     @field:Json(name = "year") val year: Int,
 )
 
@@ -105,7 +105,7 @@ data class LoginRegUserResponse(
 )
 
 data class UpdateUserRequest(
-    @field:Json(name = "personal") val personal: String,
+    @field:Json(name = "contacts") val personal: String,
     @field:Json(name = "name") val name: String,
     @field:Json(name = "year") val year: Int,
     @field:Json(name = "photo") val photo: String? = null,

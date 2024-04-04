@@ -2,6 +2,7 @@ package com.example.binder.ui.rv
 
 import android.content.Context
 import android.os.Build
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -52,6 +53,11 @@ class MatchAdapter(
         ourTitle.text = match.ours.book.toInfoStr()
         otherTitle.text = match.other.book.toInfoStr()
 
+        ourTitle.movementMethod = ScrollingMovementMethod()
+        otherTitle.movementMethod = ScrollingMovementMethod()
+        otherProfileName.movementMethod = ScrollingMovementMethod()
+        otherProfilePersonal.movementMethod = ScrollingMovementMethod()
+
         ourBookPhoto.setBitmap(match.ours.photo)
         otherBookPhoto.setBitmap(match.other.photo)
         ourBookPhoto.setOnClickListener { PhotoUtils.showPhoto(context, match.ours.photo, R.drawable.book) }
@@ -63,7 +69,7 @@ class MatchAdapter(
             otherProfilePersonal.text = it.personal
         }
 
-        otherBookPhoto.setOnClickListener { PhotoUtils.showPhoto(context, match.other.user?.photo, R.drawable.avatar) }
+        otherProfilePhoto.setOnClickListener { PhotoUtils.showPhoto(context, match.other.user?.photo, R.drawable.avatar) }
 
         val alertDialog = AlertDialog.Builder(context).apply {
             setView(view)

@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/new_book_author_name"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_margin="24dp"
             android:hint="@string/author_name"
             style="@style/SimpleText"
@@ -50,9 +50,8 @@
         <TextView
             android:id="@+id/new_book_description"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="100dp"
             android:layout_margin="24dp"
-            android:gravity="bottom"
             android:hint="@string/book_description"
             android:scrollbars="vertical"
             style="@style/SimpleText"
@@ -63,9 +62,8 @@
         <TextView
             android:id="@+id/new_book_giveaway_description"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="90dp"
             android:layout_margin="24dp"
-            android:gravity="bottom"
             android:hint="@string/giveaway_description"
             style="@style/SimpleText"
             android:scrollbars="vertical"

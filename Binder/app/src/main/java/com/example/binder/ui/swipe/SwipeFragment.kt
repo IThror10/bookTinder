@@ -3,6 +3,7 @@ package com.example.binder.ui.swipe
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +14,11 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.binder.ErrorUtils
+import com.example.binder.PhotoUtils
 import com.example.binder.R
 import com.example.binder.app.BinderApplication
 import com.example.binder.bearer
+import com.example.binder.currentUser
 import com.example.binder.databinding.FragmentSwipeBinding
 import com.example.binder.model.Giveaway
 import com.example.binder.setBitmap
@@ -69,6 +72,12 @@ class SwipeFragment : Fragment() {
         bookDesc = binding.swipeBookDescription
         giveawayDesc = binding.giveawayBookDescription
 
+        bookTitle.movementMethod = ScrollingMovementMethod()
+        bookTitle.movementMethod = ScrollingMovementMethod()
+        bookAuthor.movementMethod = ScrollingMovementMethod()
+        bookDesc.movementMethod = ScrollingMovementMethod()
+        giveawayDesc.movementMethod = ScrollingMovementMethod()
+
         noGiveaway = binding.noCurrentSwipe
 
         updateUI()
@@ -88,7 +97,7 @@ class SwipeFragment : Fragment() {
                 val completable =
                     if (isReadBook) BinderApplication.instance.binderApi.rate(
                         bearer(),
-                        currentGiveaway!!.book.id,
+                        currentGiveaway!!.book.id!!,
                         isLiked
                     )
                     else BinderApplication.instance.binderApi.swipe(
@@ -109,6 +118,7 @@ class SwipeFragment : Fragment() {
         }
         binding.like.setOnClickListener(sendListener(true))
         binding.dislike.setOnClickListener(sendListener(false))
+        bookPhoto.setOnClickListener { PhotoUtils.showPhoto(requireContext(), currentGiveaway?.photo, R.drawable.book) }
         getRecGiveaways()
         return root
     }

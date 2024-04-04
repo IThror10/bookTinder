@@ -34,6 +34,7 @@ import io.reactivex.schedulers.Schedulers
 import android.widget.Toast
 import android.net.Uri
 import android.graphics.BitmapFactory
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.binder.PhotoUtils
 import com.example.binder.PhotoUtils.getImageBitmap
@@ -62,6 +63,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var profilePhotoImageView: ImageView
     private lateinit var noGiveaways: TextView
+    private lateinit var giveawaysProgressBar: ProgressBar
 
     private var profilePhotoByteArray: ByteArray? = null
     private var isEditMode: Boolean = false
@@ -91,6 +93,8 @@ class ProfileFragment : Fragment() {
 
         editIcon = binding.profileEditIcon
         saveIcon = binding.profileSaveIcon
+
+        giveawaysProgressBar = binding.giveawaysProgressBar
 
         saveIcon.setVisible(false)
 
@@ -142,6 +146,7 @@ class ProfileFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("CheckResult")
     private fun getGiveaways() {
+        giveawaysProgressBar.setVisible(true)
         BinderApplication.instance.binderApi.getUserGiveaways(bearer())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -154,6 +159,7 @@ class ProfileFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateUI() {
+        giveawaysProgressBar.setVisible(false)
         noGiveaways.setVisible(userGiveaways.isEmpty())
         profileName.setText(currentUser.name)
         profilePersonal.setText(currentUser.personal)
