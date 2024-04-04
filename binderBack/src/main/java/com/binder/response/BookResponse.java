@@ -18,8 +18,8 @@ public class BookResponse {
     @Schema(description = "Автор")
     private String author;
 
-    @Schema(description = "Издание")
-    private String edition;
+    @Schema(description = "Год")
+    private Integer year;
 
     @Schema(description = "Описание книги")
     private String description;
@@ -28,7 +28,7 @@ public class BookResponse {
         id = book.getId();
         title = book.getTitle();
         author = book.getAuthor();
-        edition = book.getEdition();
+        year = book.getYear();
         description = book.getDescription();
     }
 }

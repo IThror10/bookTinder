@@ -22,8 +22,8 @@ public class Book {
     @Column(name="author", nullable = false)
     private String author;
 
-    @Column(name = "edition", nullable = false)
-    private String edition;
+    @Column(name = "year", nullable = false)
+    private Integer year;
 
     @Column(name = "description", nullable = false)
     private String description;

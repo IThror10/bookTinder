@@ -12,9 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
-    @Query("SELECT new com.binder.response.BookResponse(b.id, b.title, b.author, b.edition, b.description) " +
+    @Query("SELECT new com.binder.response.BookResponse(b.id, b.title, b.author, b.year, b.description) " +
         "FROM Book b WHERE lower(b.title) LIKE lower(concat('%', :name, '%'))")
     List<BookResponse> searchBooksLike(@Param("name") String name);
 
-    Optional<Book> findByTitleAndAuthorAndDescriptionAndEdition(String title, String author, String description, String edition);
+    Optional<Book> findByTitleAndAuthorAndDescriptionAndYear(String title, String author, String description, Integer year);
 }

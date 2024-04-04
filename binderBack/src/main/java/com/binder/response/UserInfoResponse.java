@@ -18,7 +18,6 @@ public class UserInfoResponse {
     String personal;
     @Schema(description = "Имя пользователя", example = "8-2000")
     String name;
-
     @Schema(description = "Фотография пользователя")
     byte[] photo;
 

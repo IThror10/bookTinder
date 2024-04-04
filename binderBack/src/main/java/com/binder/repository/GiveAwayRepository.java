@@ -13,6 +13,7 @@ import java.util.Set;
 
 @Repository
 public interface GiveAwayRepository extends CrudRepository<GiveAway, Long> {
+    @Transactional
     List<GiveAway> findAllByUser (User user);
 
     @Transactional

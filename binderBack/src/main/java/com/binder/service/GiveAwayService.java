@@ -32,11 +32,11 @@ public class GiveAwayService {
     @Transactional
     public Book addBook(BookRequest request) {
 
-        Optional<Book> optionalBook = bookRepository.findByTitleAndAuthorAndDescriptionAndEdition(
+        Optional<Book> optionalBook = bookRepository.findByTitleAndAuthorAndDescriptionAndYear(
                 request.title(),
                 request.author(),
                 request.description(),
-                request.edition()
+                request.year()
         );
         Book book;
 
@@ -45,7 +45,7 @@ public class GiveAwayService {
                     .description(request.description())
                     .author(request.author())
                     .title(request.title())
-                    .edition(request.edition())
+                    .year(request.year())
                     .build();
             book = bookRepository.save(book);
         } else {
