@@ -21,6 +21,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.binder.ErrorUtils
+import com.example.binder.PhotoUtils
+import com.example.binder.PhotoUtils.getImageBitmap
 import com.example.binder.app.BinderApplication
 import com.example.binder.bearer
 import com.example.binder.currentUser
@@ -33,7 +35,6 @@ import com.example.binder.ui.rv.BookAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.io.ByteArrayOutputStream
 import java.util.Base64
 
 
@@ -174,22 +175,25 @@ class NewBookFragment : Fragment() {
             when (requestCode) {
                 REQUEST_CODE_PICK_IMAGE -> {
                     data?.data?.let { uri ->
-                        bookPhoto.setImageURI(uri)
-                        val bitmap =
-                            MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
-                        val stream = ByteArrayOutputStream()
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
-                        bookPhotoByteArray = stream.toByteArray()
+                        val imageBitmap = getImageBitmap(requireContext(), uri)
+                        imageBitmap?.let {
+                            val bytes = PhotoUtils.checkBytes(it, requireContext())
+                            if (bytes != null) {
+                                bookPhoto.setImageBitmap(it)
+                                bookPhotoByteArray = bytes
+                            }
+                        }
                     }
                 }
 
                 REQUEST_CODE_TAKE_PICTURE -> {
                     val imageBitmap = data?.extras?.get("data") as Bitmap?
                     imageBitmap?.let {
-                        bookPhoto.setImageBitmap(it)
-                        val stream = ByteArrayOutputStream()
-                        it.compress(Bitmap.CompressFormat.JPEG, 50, stream)
-                        bookPhotoByteArray = stream.toByteArray()
+                        val bytes = PhotoUtils.checkBytes(it, requireContext())
+                        if (bytes != null) {
+                            bookPhoto.setImageBitmap(it)
+                            bookPhotoByteArray = bytes
+                        }
                     }
                 }
             }

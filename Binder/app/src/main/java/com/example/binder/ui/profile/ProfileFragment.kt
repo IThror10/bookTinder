@@ -35,8 +35,10 @@ import android.widget.Toast
 import android.net.Uri
 import android.graphics.BitmapFactory
 import android.widget.TextView
+import com.example.binder.PhotoUtils
+import com.example.binder.PhotoUtils.getImageBitmap
+import com.example.binder.R
 import com.example.binder.getAuthInfo
-import com.example.binder.model.Giveaway
 import java.io.FileNotFoundException
 
 import java.io.ByteArrayOutputStream
@@ -68,6 +70,7 @@ class ProfileFragment : Fragment() {
         private const val REQUEST_CODE_PICK_IMAGE = 1
         private const val REQUEST_CODE_TAKE_PICTURE = 2
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("CheckResult")
     override fun onCreateView(
@@ -126,7 +129,7 @@ class ProfileFragment : Fragment() {
         }
         profilePhotoImageView.setOnClickListener {
             if (!isEditMode) {
-                // Тут можно сделать чтобы фото во весь экран открывалось
+                PhotoUtils.showPhoto(requireContext(), currentUser.photo, R.drawable.avatar)
             } else openImageSourceSelectionDialog()
         }
         updateUI()
@@ -187,35 +190,31 @@ class ProfileFragment : Fragment() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_CODE_PICK_IMAGE -> {
                     data?.data?.let { uri ->
-                        val imageBitmap = getImageBitmap(uri)
+                        val imageBitmap = getImageBitmap(requireContext(), uri)
                         imageBitmap?.let {
-                            if (checkImageSize(it)) {
+                            val bytes = PhotoUtils.checkBytes(it, requireContext())
+                            if (bytes != null) {
                                 profilePhotoImageView.setImageBitmap(it)
-                                val stream = ByteArrayOutputStream()
-                                it.compress(Bitmap.CompressFormat.JPEG, 50, stream)
-                                profilePhotoByteArray = stream.toByteArray()
-                            } else {
-                                Toast.makeText(requireContext(), "Image size should not exceed 5 MB", Toast.LENGTH_SHORT).show()
+                                profilePhotoByteArray = bytes
                             }
                         }
                     }
                 }
+
                 REQUEST_CODE_TAKE_PICTURE -> {
                     val imageBitmap = data?.extras?.get("data") as Bitmap?
                     imageBitmap?.let {
-                        if (checkImageSize(it)) {
+                        val bytes = PhotoUtils.checkBytes(it, requireContext())
+                        if (bytes != null) {
                             profilePhotoImageView.setImageBitmap(it)
-                            val stream = ByteArrayOutputStream()
-                            it.compress(Bitmap.CompressFormat.JPEG, 50, stream)
-                            profilePhotoByteArray = stream.toByteArray()
-                        } else {
-                            Toast.makeText(requireContext(), "Image size should not exceed 5 MB", Toast.LENGTH_SHORT).show()
+                            profilePhotoByteArray = bytes
                         }
                     }
                 }
@@ -223,23 +222,6 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun getImageBitmap(uri: Uri): Bitmap? {
-        return try {
-            val inputStream = requireContext().contentResolver.openInputStream(uri)
-            BitmapFactory.decodeStream(inputStream)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    private fun checkImageSize(imageBitmap: Bitmap): Boolean {
-        val outputStream = ByteArrayOutputStream()
-        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-        val byteArray = outputStream.toByteArray()
-        val imageSizeInMb = byteArray.size / (1024.0 * 1024.0)
-        return imageSizeInMb <= 5
-    }
 }
 
 

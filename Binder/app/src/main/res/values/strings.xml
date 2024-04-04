@@ -40,4 +40,5 @@
     <string name="book_author">Book Author</string>
     <string name="book_year">Book Year</string>
     <string name="you_haven_t_any_giveaways">You haven\'t any giveaways</string>
+    <string name="no_more_swipes">No more swipes!</string>
 </resources>

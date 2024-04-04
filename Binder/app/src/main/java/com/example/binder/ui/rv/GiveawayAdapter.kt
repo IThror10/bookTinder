@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.binder.ErrorUtils
+import com.example.binder.PhotoUtils
 import com.example.binder.R
 import com.example.binder.app.BinderApplication
 import com.example.binder.bearer
@@ -75,6 +76,7 @@ class GiveawayAdapter(
         bookDescET.text = giveaway.book.description
         giveawayDescET.text = giveaway.description
         bookPhoto.setBitmap(giveaway.photo)
+        bookPhoto.setOnClickListener { PhotoUtils.showPhoto(context, giveaway.photo, R.drawable.book) }
 
         val alertDialog = AlertDialog.Builder(context).apply {
             setView(view)

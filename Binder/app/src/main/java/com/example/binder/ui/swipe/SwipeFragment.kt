@@ -47,6 +47,8 @@ class SwipeFragment : Fragment() {
     private lateinit var bookDesc: TextView
     private lateinit var giveawayDesc: TextView
 
+    private lateinit var noGiveaway: TextView
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +69,9 @@ class SwipeFragment : Fragment() {
         bookDesc = binding.swipeBookDescription
         giveawayDesc = binding.giveawayBookDescription
 
+        noGiveaway = binding.noCurrentSwipe
+
+        updateUI()
         binding.bookButton.setOnClickListener {
             isReadBook = !isReadBook
             if (isReadBook) {
@@ -134,6 +139,7 @@ class SwipeFragment : Fragment() {
     private fun updateUI() {
         if (currentGiveaway == null) bookPhoto.setImageResource(R.drawable.book)
         else bookPhoto.setBitmap(currentGiveaway?.photo)
+        noGiveaway.setVisible(currentGiveaway == null)
         bookTitle.text = currentGiveaway?.book?.title ?: ""
         bookAuthor.text = currentGiveaway?.book?.author ?: ""
         bookYear.text = currentGiveaway?.book?.year?.toString() ?: ""

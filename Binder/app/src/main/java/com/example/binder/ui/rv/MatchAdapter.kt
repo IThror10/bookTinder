@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.example.binder.PhotoUtils
 import com.example.binder.R
 import com.example.binder.model.Match
 import com.example.binder.model.toInfoStr
@@ -53,12 +54,16 @@ class MatchAdapter(
 
         ourBookPhoto.setBitmap(match.ours.photo)
         otherBookPhoto.setBitmap(match.other.photo)
+        ourBookPhoto.setOnClickListener { PhotoUtils.showPhoto(context, match.ours.photo, R.drawable.book) }
+        otherBookPhoto.setOnClickListener { PhotoUtils.showPhoto(context, match.other.photo, R.drawable.book) }
 
         match.other.user?.let {
             otherProfilePhoto.setBitmap(it.photo)
             otherProfileName.text = it.name
             otherProfilePersonal.text = it.personal
         }
+
+        otherBookPhoto.setOnClickListener { PhotoUtils.showPhoto(context, match.other.user?.photo, R.drawable.avatar) }
 
         val alertDialog = AlertDialog.Builder(context).apply {
             setView(view)
