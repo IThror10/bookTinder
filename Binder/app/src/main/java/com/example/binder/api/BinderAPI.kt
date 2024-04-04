@@ -61,7 +61,7 @@ interface BinderAPI {
         @Path("giveAwayId") giveAwayId: Long
     ): Completable
 
-    @GET("api/book/{name}")
+    @GET("user/book/recommend/match")
     fun getMatches(
         @Header("Authorization") token: String
     ): Single<List<Match>>

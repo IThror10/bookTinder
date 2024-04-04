@@ -42,11 +42,11 @@ class GiveawayAdapter(
         return BookViewHolder(inflater.inflate(R.layout.giveaway_item, parent, false)).apply {
             itemView.findViewById<ImageView>(R.id.giveaway_remove_img).setOnClickListener {
                 val giveaway = data[this.adapterPosition]
+                setData(data.filter { it.id != giveaway.id })
                 BinderApplication.instance.binderApi.deleteGiveaway(bearer(), giveaway.id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        setData(data.filter { it.id != giveaway.id })
                         Log.i("deleteGiveaway", giveaway.id.toString())
                         updateUI()
                     }, { ErrorUtils.showMessage(it, context, "deleteGiveaway") })
@@ -92,7 +92,7 @@ class GiveawayAdapter(
     }
 }
 
-class BookViewHolder(root: View): RecyclerView.ViewHolder(root) {
+class BookViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     private val bookInfo: TextView = root.findViewById(R.id.book_item_book_info)
 

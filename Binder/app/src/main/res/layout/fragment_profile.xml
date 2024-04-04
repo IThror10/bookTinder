@@ -72,6 +72,17 @@
         app:layout_constraintStart_toEndOf="@+id/profile_edit_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/no_giveaways"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/you_haven_t_any_giveaways"
+        style="@style/SimpleText"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_rv_books"
+        app:layout_constraintEnd_toEndOf="@+id/profile_rv_books"
+        app:layout_constraintStart_toStartOf="@+id/profile_rv_books"
+        app:layout_constraintTop_toTopOf="@+id/profile_rv_books" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

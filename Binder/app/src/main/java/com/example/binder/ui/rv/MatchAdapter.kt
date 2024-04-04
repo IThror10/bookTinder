@@ -1,14 +1,18 @@
 package com.example.binder.ui.rv
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.binder.R
 import com.example.binder.model.Match
 import com.example.binder.model.toInfoStr
+import com.example.binder.setBitmap
 
 class MatchAdapter(
     val context: Context
@@ -21,6 +25,7 @@ class MatchAdapter(
         notifyDataSetChanged()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return BookViewHolder(inflater.inflate(R.layout.book_item, parent, false)).apply {
@@ -31,14 +36,29 @@ class MatchAdapter(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showPopup(match: Match) {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.match_book_popup, null)
-        val myBook: TextView = view.findViewById(R.id.popup_my_book)
-        val matchBook: TextView = view.findViewById(R.id.popup_match_book)
+        val ourTitle: TextView = view.findViewById(R.id.popup_my_book)
+        val otherTitle: TextView = view.findViewById(R.id.popup_match_book)
+        val ourBookPhoto: ImageView = view.findViewById(R.id.our_book_photo)
+        val otherBookPhoto: ImageView = view.findViewById(R.id.other_book_photo)
+        val otherProfilePhoto: ImageView = view.findViewById(R.id.popup_profile_match_photo)
+        val otherProfileName: TextView = view.findViewById(R.id.popup_profile_match_name)
+        val otherProfilePersonal: TextView = view.findViewById(R.id.popup_profile_match_personal)
 
-        myBook.text = match.ours.book.toInfoStr()
-        matchBook.text = match.other.book.toInfoStr()
+        ourTitle.text = match.ours.book.toInfoStr()
+        otherTitle.text = match.other.book.toInfoStr()
+
+        ourBookPhoto.setBitmap(match.ours.photo)
+        otherBookPhoto.setBitmap(match.other.photo)
+
+        match.other.user?.let {
+            otherProfilePhoto.setBitmap(it.photo)
+            otherProfileName.text = it.name
+            otherProfilePersonal.text = it.personal
+        }
 
         val alertDialog = AlertDialog.Builder(context).apply {
             setView(view)

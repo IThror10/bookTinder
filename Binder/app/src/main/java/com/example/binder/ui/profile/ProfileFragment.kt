@@ -34,7 +34,9 @@ import io.reactivex.schedulers.Schedulers
 import android.widget.Toast
 import android.net.Uri
 import android.graphics.BitmapFactory
+import android.widget.TextView
 import com.example.binder.getAuthInfo
+import com.example.binder.model.Giveaway
 import java.io.FileNotFoundException
 
 import java.io.ByteArrayOutputStream
@@ -56,8 +58,8 @@ class ProfileFragment : Fragment() {
     private lateinit var editIcon: ImageView
     private lateinit var saveIcon: ImageView
 
-
     private lateinit var profilePhotoImageView: ImageView
+    private lateinit var noGiveaways: TextView
 
     private var profilePhotoByteArray: ByteArray? = null
     private var isEditMode: Boolean = false
@@ -82,6 +84,7 @@ class ProfileFragment : Fragment() {
         profilePersonal = binding.profilePersonalInfo
 
         profilePhotoImageView = binding.profilePhoto
+        noGiveaways = binding.noGiveaways
 
         editIcon = binding.profileEditIcon
         saveIcon = binding.profileSaveIcon
@@ -148,6 +151,7 @@ class ProfileFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateUI() {
+        noGiveaways.setVisible(userGiveaways.isEmpty())
         profileName.setText(currentUser.name)
         profilePersonal.setText(currentUser.personal)
         profilePhotoImageView.setBitmap(currentUser.photo)
@@ -246,7 +250,7 @@ fun EditText.setEditable(editable: Boolean) {
     this.isFocusableInTouchMode = editable
 }
 
-fun ImageView.setVisible(visible: Boolean) {
+fun View.setVisible(visible: Boolean) {
     this.isClickable = visible
     this.isVisible = visible
 }
