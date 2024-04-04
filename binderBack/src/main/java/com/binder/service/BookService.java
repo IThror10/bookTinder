@@ -45,8 +45,13 @@ public class BookService {
     public List<BookResponse> searchBooks(String name) {
         String url = String.format(API_URL, name, API_KEY);
         Map<String, Object> response = template.getForObject(url, Map.class);
-        List<Object> items = (ArrayList<Object>) response.get("items");
         List<BookResponse> res = new ArrayList<>();
+
+        if (Integer.parseInt(response.get("totalItems").toString()) == 0) {
+            return res;
+        }
+
+        List<Object> items = (ArrayList<Object>) response.get("items");
 
 
         for (Object item : items) {
