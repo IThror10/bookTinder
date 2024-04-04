@@ -80,8 +80,9 @@ public class GiveAwayService {
 
     @Transactional
     public List<GiveAwayResponse> getAvailableAdvertisements(Long uid) {
-        Set<GiveAway> found = giveAwayRepository.getAvailableGiveAway(uid);
-        return found.stream().map(GiveAwayResponse::new).collect(Collectors.toList());
+        Set<GiveAway> foundNew = giveAwayRepository.getAvailableUnreadGiveAway(uid);
+
+        return foundNew.stream().map(GiveAwayResponse::new).collect(Collectors.toList());
 //        Set<GiveAwayResponse> likedUs = matchResultRepository.likedUs(uid);
 //        return likedUs.stream()
 //                .filter(el -> found.stream().anyMatch(cur -> cur.getId().equals(el.getId())))
@@ -106,7 +107,14 @@ public class GiveAwayService {
 
     @Transactional
     public List<MatchResponse> getMatches(Long uid) {
-        return matchResultRepository.getMatches(uid);
+        List<MatchResponse> matches =  matchResultRepository.getMatches(uid);
+        for (MatchResponse match: matches) {
+            match.getOurs().getUser().setPassword(null);
+            match.getOther().getUser().setPassword(null);
+            match.getOurs().getUser().setUsername(null);
+            match.getOther().getUser().setUsername(null);
+        }
+        return matches;
     }
 
     @Transactional
