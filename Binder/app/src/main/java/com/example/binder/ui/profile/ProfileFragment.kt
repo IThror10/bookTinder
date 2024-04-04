@@ -136,7 +136,7 @@ class ProfileFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("CheckResult")
     private fun getGiveaways() {
-        BinderApplication.instance.binderApi.getGiveaways(bearer())
+        BinderApplication.instance.binderApi.getUserGiveaways(bearer())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

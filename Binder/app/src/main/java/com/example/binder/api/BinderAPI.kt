@@ -45,7 +45,7 @@ interface BinderAPI {
     ): Single<Giveaway>
 
     @GET("user/book")
-    fun getGiveaways(
+    fun getUserGiveaways(
         @Header("Authorization") token: String
     ): Single<List<Giveaway>>
 
@@ -65,6 +65,25 @@ interface BinderAPI {
     fun getMatches(
         @Header("Authorization") token: String
     ): Single<List<Match>>
+
+    @GET("user/book/recommend")
+    fun getRecommendGiveaways(
+        @Header("Authorization") token: String
+    ): Single<List<Giveaway>>
+
+    @POST("user/book/recommend/{giveAwayId}")
+    fun swipe(
+        @Header("Authorization") token: String,
+        @Path("giveAwayId") id: Long,
+        @Body liked: Boolean
+    ): Completable
+
+    @POST("user/book/{bookId}")
+    fun rate(
+        @Header("Authorization") token: String,
+        @Path("bookId") id: Long,
+        @Body liked: Boolean
+    ): Completable
 }
 
 data class RegisterUserReq(

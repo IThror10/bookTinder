@@ -37,4 +37,6 @@
     <string name="book_description">Book Description</string>
     <string name="menu_swipe">Swipe</string>
     <string name="giveaway_description">Giveaway description</string>
+    <string name="book_author">Book Author</string>
+    <string name="book_year">Book Year</string>
 </resources>

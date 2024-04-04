@@ -6,29 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.swipe.SwipeFragment">
 
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+    <ImageView
+        android:id="@+id/book_photo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:minHeight="48dp"
-        android:text="NameBook"
-        app:layout_constraintStart_toEndOf="@+id/book"
+        android:src="@drawable/book"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        android:text="DefinitionBook"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book" />
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:background="@color/green"
@@ -41,10 +29,11 @@
             android:layout_height="100dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:onClick="onImageClick"
-            android:src="@drawable/like" />
+            android:layout_margin="24dp"
+            android:src="@drawable/like"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/dislike"
@@ -52,10 +41,11 @@
             android:layout_height="100dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:onClick="onImageClick"
-            android:src="@drawable/favorite" />
+            android:src="@drawable/favorite"
+            android:layout_margin="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/book_button"
@@ -63,10 +53,11 @@
             android:layout_height="100dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:onClick="onImageClick"
-            android:src="@drawable/red_book" />
+            android:src="@drawable/red_book"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dislike"
+            app:layout_constraintStart_toEndOf="@+id/like"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/pink_book1"
@@ -74,10 +65,10 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="71dp"
+            android:src="@drawable/pink_book"
             android:visibility="invisible"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/pink_book" />
+            app:layout_constraintBottom_toBottomOf="@+id/like"
+            app:layout_constraintStart_toStartOf="@+id/like" />
 
         <ImageView
             android:id="@+id/pink_book2"
@@ -85,23 +76,76 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="303dp"
+            android:src="@drawable/pink_book"
             android:visibility="invisible"
-            android:layout_marginBottom="15dp"
-            android:src="@drawable/pink_book" />
+            app:layout_constraintBottom_toBottomOf="@+id/dislike"
+            app:layout_constraintEnd_toEndOf="@+id/dislike" />
 
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/book"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/book"
-        app:layout_constraintStart_toStartOf="parent"
+    <TextView
+        android:id="@+id/swipe_book_author"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="24dp"
+        android:hint="@string/book_author"
+        android:maxLines="2"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/book_photo"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/swipe_book_year"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_margin="24dp"
+        android:hint="@string/book_year"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/book_photo"
+        app:layout_constraintTop_toBottomOf="@+id/swipe_book_author" />
+
+    <TextView
+        android:id="@+id/swipe_book_title"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_margin="24dp"
+        android:hint="@string/book_title"
+        android:maxLines="2"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/book_photo" />
+
+    <TextView
+        android:id="@+id/swipe_book_description"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_margin="24dp"
+        android:hint="@string/book_description"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipe_book_title" />
+
+    <TextView
+        android:id="@+id/giveaway_book_description"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_margin="24dp"
+        android:hint="@string/giveaway_description"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipe_book_description" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
