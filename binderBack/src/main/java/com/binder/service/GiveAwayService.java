@@ -109,10 +109,8 @@ public class GiveAwayService {
     public List<MatchResponse> getMatches(Long uid) {
         List<MatchResponse> matches =  matchResultRepository.getMatches(uid);
         for (MatchResponse match: matches) {
-            match.getOurs().getUser().setPassword(null);
-            match.getOther().getUser().setPassword(null);
-            match.getOurs().getUser().setUsername(null);
-            match.getOther().getUser().setUsername(null);
+            match.getOurs().getUser().setPassword("");
+            match.getOther().getUser().setPassword("");
         }
         return matches;
     }
