@@ -48,6 +48,4 @@ class SwipeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

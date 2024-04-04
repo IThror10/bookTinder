@@ -1,21 +1,19 @@
 package com.example.binder.api
 
-import okhttp3.MultipartBody
-import okhttp3.ResponseBody
 import com.example.binder.model.Book
 import com.example.binder.model.Giveaway
+import com.example.binder.model.Match
 import com.example.binder.model.UserData
 import com.squareup.moshi.Json
+import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
-import retrofit2.http.Part
-import retrofit2.http.Multipart
 
 interface BinderAPI {
 
@@ -29,7 +27,7 @@ interface BinderAPI {
         @Body req: LoginUserReq
     ): Single<LoginRegUserResponse>
 
-    @GET("api/user/user")
+    @GET("api/user")
     fun getAuthInfo(
         @Header("Authorization") token: String
     ): Single<UserData>
@@ -56,6 +54,17 @@ interface BinderAPI {
         @Header("Authorization") token: String,
         @Path("name") name: String
     ): Single<List<Book>>
+
+    @DELETE("user/book/{giveAwayId}")
+    fun deleteGiveaway(
+        @Header("Authorization") token: String,
+        @Path("giveAwayId") giveAwayId: Long
+    ): Completable
+
+    @GET("api/book/{name}")
+    fun getMatches(
+        @Header("Authorization") token: String
+    ): Single<List<Match>>
 }
 
 data class RegisterUserReq(
@@ -64,8 +73,6 @@ data class RegisterUserReq(
     @field:Json(name = "password") val password: String,
     @field:Json(name = "personal") val personal: String,
     @field:Json(name = "year") val year: Int,
-
-
 )
 
 data class LoginUserReq(
@@ -81,5 +88,6 @@ data class LoginRegUserResponse(
 data class UpdateUserRequest(
     @field:Json(name = "personal") val personal: String,
     @field:Json(name = "name") val name: String,
+    @field:Json(name = "year") val year: Int,
     @field:Json(name = "photo") val photo: String? = null,
 )

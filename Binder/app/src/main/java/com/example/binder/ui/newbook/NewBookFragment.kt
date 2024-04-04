@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -96,9 +97,12 @@ class NewBookFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Log.i("Created giveaway!", it.toString())
+                    Toast.makeText(requireContext(), "Created!", Toast.LENGTH_SHORT).show()
                 }, { ErrorUtils.showMessage(it, this.requireContext(), "createGiveaway") })
         }
-        bookTitleET.addTextChangedListener { if (bookSet) bookSet = false else suggestBooks(it.toString()) }
+        bookTitleET.addTextChangedListener {
+            if (bookSet) bookSet = false else suggestBooks(it.toString())
+        }
         bookPhoto.setOnClickListener {
             openImageSourceSelectionDialog()
         }
@@ -118,7 +122,11 @@ class NewBookFragment : Fragment() {
     }
 
     private fun updateUI(books: List<Book>) {
-        bookAdapter.setData(books)
+        if (books.size == 1 &&
+            books[0].title == bookTitleET.str() &&
+            books[0].author == bookAuthorET.str()
+        ) bookAdapter.setData(listOf())
+        else bookAdapter.setData(books)
         suggestRV.layoutManager = LinearLayoutManager(context)
         suggestRV.adapter = bookAdapter
     }
@@ -159,6 +167,7 @@ class NewBookFragment : Fragment() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -166,18 +175,20 @@ class NewBookFragment : Fragment() {
                 REQUEST_CODE_PICK_IMAGE -> {
                     data?.data?.let { uri ->
                         bookPhoto.setImageURI(uri)
-                        val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+                        val bitmap =
+                            MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
                         val stream = ByteArrayOutputStream()
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
                         bookPhotoByteArray = stream.toByteArray()
                     }
                 }
+
                 REQUEST_CODE_TAKE_PICTURE -> {
                     val imageBitmap = data?.extras?.get("data") as Bitmap?
                     imageBitmap?.let {
                         bookPhoto.setImageBitmap(it)
                         val stream = ByteArrayOutputStream()
-                        it.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                        it.compress(Bitmap.CompressFormat.JPEG, 50, stream)
                         bookPhotoByteArray = stream.toByteArray()
                     }
                 }

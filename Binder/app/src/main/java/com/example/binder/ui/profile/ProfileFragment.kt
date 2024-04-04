@@ -76,7 +76,7 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        giveawayAdapter = GiveawayAdapter(this.requireContext())
+        giveawayAdapter = GiveawayAdapter(this.requireContext(), this::getGiveaways)
         bookRV = binding.profileRvBooks
         profileName = binding.profileName
         profilePersonal = binding.profilePersonalInfo
@@ -110,7 +110,7 @@ class ProfileFragment : Fragment() {
             profileName.setEditable(false)
             profilePersonal.setEditable(false)
             val photoB64 = profilePhotoByteArray?.let { Base64.getEncoder().encodeToString(it) }
-            val req = UpdateUserRequest(personal, name, photoB64)
+            val req = UpdateUserRequest(personal, name, currentUser.year, photoB64)
             BinderApplication.instance.binderApi.updateUser(bearer(), req)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -118,6 +118,7 @@ class ProfileFragment : Fragment() {
                     Log.i("update user", it.toString())
                     currentUser = it
                     updateUI()
+                    Toast.makeText(requireContext(), "Saved!", Toast.LENGTH_SHORT).show()
                 }, { ErrorUtils.showMessage(it, this.requireContext(), "updateUser") })
         }
         profilePhotoImageView.setOnClickListener {
@@ -193,7 +194,7 @@ class ProfileFragment : Fragment() {
                             if (checkImageSize(it)) {
                                 profilePhotoImageView.setImageBitmap(it)
                                 val stream = ByteArrayOutputStream()
-                                it.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                                it.compress(Bitmap.CompressFormat.JPEG, 50, stream)
                                 profilePhotoByteArray = stream.toByteArray()
                             } else {
                                 Toast.makeText(requireContext(), "Image size should not exceed 5 MB", Toast.LENGTH_SHORT).show()
@@ -207,7 +208,7 @@ class ProfileFragment : Fragment() {
                         if (checkImageSize(it)) {
                             profilePhotoImageView.setImageBitmap(it)
                             val stream = ByteArrayOutputStream()
-                            it.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                            it.compress(Bitmap.CompressFormat.JPEG, 50, stream)
                             profilePhotoByteArray = stream.toByteArray()
                         } else {
                             Toast.makeText(requireContext(), "Image size should not exceed 5 MB", Toast.LENGTH_SHORT).show()

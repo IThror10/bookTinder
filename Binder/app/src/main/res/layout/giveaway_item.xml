@@ -22,21 +22,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="100dp"
+        android:layout_width="60dp"
         android:layout_height="match_parent"
         app:bring_to_clamp="100dp"
         android:orientation="horizontal"
         app:clamp="self"
         app:gravity="right"
         app:sticky="none">
-
-        <ImageView
-            android:id="@+id/giveaway_edit_img"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_edit" />
 
         <ImageView
             android:id="@+id/giveaway_remove_img"

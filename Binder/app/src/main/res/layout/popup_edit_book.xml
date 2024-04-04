@@ -12,74 +12,66 @@
         android:scrollbars="vertical"
         tools:context=".ui.newbook.NewBookFragment">
 
-        <EditText
+        <TextView
             android:id="@+id/new_book_title"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:hint="@string/book_title"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
+            android:scrollbars="vertical"
+            style="@style/SimpleText"
             app:layout_constraintBottom_toBottomOf="@+id/new_book_photo"
             app:layout_constraintEnd_toStartOf="@+id/new_book_photo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
-        <EditText
+        <TextView
             android:id="@+id/new_book_author_name"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="24dp"
             android:hint="@string/author_name"
-            android:inputType="text"
+            style="@style/SimpleText"
             app:layout_constraintEnd_toStartOf="@+id/new_book_year"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/suggest_books_rv" />
+            app:layout_constraintTop_toBottomOf="@+id/new_book_title" />
 
-        <EditText
+        <TextView
             android:id="@+id/new_book_year"
             android:layout_width="80dp"
             android:layout_height="50dp"
             android:layout_margin="24dp"
             android:hint="@string/year"
-            android:inputType="number"
+            style="@style/SimpleText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/suggest_books_rv" />
+            app:layout_constraintTop_toBottomOf="@+id/new_book_photo" />
 
-        <EditText
+        <TextView
             android:id="@+id/new_book_description"
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:layout_margin="24dp"
             android:gravity="bottom"
             android:hint="@string/book_description"
-            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            style="@style/SimpleText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/new_book_author_name" />
 
-        <EditText
+        <TextView
             android:id="@+id/new_book_giveaway_description"
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:layout_margin="24dp"
             android:gravity="bottom"
             android:hint="@string/giveaway_description"
-            android:inputType="textMultiLine"
+            style="@style/SimpleText"
+            android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/new_book_description" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/suggest_books_rv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:maxHeight="110dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_book_photo"
-            tools:itemCount="2"
-            tools:listitem="@layout/book_item" />
 
         <ImageView
             android:id="@+id/new_book_photo"
