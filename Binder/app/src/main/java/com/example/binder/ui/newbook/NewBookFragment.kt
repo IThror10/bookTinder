@@ -1,13 +1,20 @@
 package com.example.binder.ui.newbook
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,8 +29,12 @@ import com.example.binder.model.Book
 import com.example.binder.model.Giveaway
 import com.example.binder.str
 import com.example.binder.ui.rv.BookAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.io.ByteArrayOutputStream
+import java.util.Base64
+
 
 class NewBookFragment : Fragment() {
 
@@ -35,13 +46,21 @@ class NewBookFragment : Fragment() {
     private lateinit var bookYearET: EditText
     private lateinit var bookDescET: EditText
     private lateinit var giveawayDescET: EditText
-    private lateinit var giveawayLocET: EditText
     private lateinit var suggestRV: RecyclerView
     private lateinit var submitButton: Button
+    private lateinit var bookPhoto: ImageView
 
     private lateinit var bookAdapter: BookAdapter
     private var bookSet: Boolean = false
 
+    private var bookPhotoByteArray: ByteArray? = null
+
+    companion object {
+        private const val REQUEST_CODE_PICK_IMAGE = 1
+        private const val REQUEST_CODE_TAKE_PICTURE = 2
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("CheckResult")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,9 +76,10 @@ class NewBookFragment : Fragment() {
         bookYearET = binding.newBookYear
         bookDescET = binding.newBookDescription
         giveawayDescET = binding.newBookGiveawayDescription
-        giveawayLocET = binding.newBookLocation
         suggestRV = binding.suggestBooksRv
         submitButton = binding.newBookSubmit
+
+        bookPhoto = binding.newBookPhoto
 
         submitButton.setOnClickListener {
             if (bookTitleET.text.isBlank()) return@setOnClickListener
@@ -67,10 +87,10 @@ class NewBookFragment : Fragment() {
             if (bookYearET.text.isBlank()) return@setOnClickListener
             if (bookDescET.text.isBlank()) return@setOnClickListener
             if (giveawayDescET.text.isBlank()) return@setOnClickListener
-            if (giveawayLocET.text.isBlank()) return@setOnClickListener
             val book =
                 Book(-1, bookTitleET.str(), bookAuthorET.str(), bookYearET.int(), bookDescET.str())
-            val giveaway = Giveaway(-1, currentUser.userId, giveawayDescET.str(), book)
+            val str = Base64.getEncoder().encodeToString(bookPhotoByteArray)
+            val giveaway = Giveaway(-1, currentUser.userId, giveawayDescET.str(), book, str)
             BinderApplication.instance.binderApi.createGiveaway(bearer(), giveaway)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -79,6 +99,9 @@ class NewBookFragment : Fragment() {
                 }, { ErrorUtils.showMessage(it, this.requireContext()) })
         }
         bookTitleET.addTextChangedListener { if (bookSet) bookSet = false else suggestBooks(it.toString()) }
+        bookPhoto.setOnClickListener {
+            openImageSourceSelectionDialog()
+        }
         return root
     }
 
@@ -112,5 +135,53 @@ class NewBookFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun openImageSourceSelectionDialog() {
+        val items = arrayOf("Gallery", "Camera")
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Select Image Source")
+            .setItems(items) { _, which ->
+                when (which) {
+                    0 -> openGallery()
+                    1 -> openCamera()
+                }
+            }
+            .show()
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE)
+    }
+
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_CODE_PICK_IMAGE -> {
+                    data?.data?.let { uri ->
+                        bookPhoto.setImageURI(uri)
+                        val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+                        val stream = ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                        bookPhotoByteArray = stream.toByteArray()
+                    }
+                }
+                REQUEST_CODE_TAKE_PICTURE -> {
+                    val imageBitmap = data?.extras?.get("data") as Bitmap?
+                    imageBitmap?.let {
+                        bookPhoto.setImageBitmap(it)
+                        val stream = ByteArrayOutputStream()
+                        it.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                        bookPhotoByteArray = stream.toByteArray()
+                    }
+                }
+            }
+        }
     }
 }

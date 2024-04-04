@@ -1,13 +1,19 @@
 package com.example.binder.ui.profile
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,23 +21,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.binder.ErrorUtils
 import com.example.binder.api.UpdateUserRequest
 import com.example.binder.app.BinderApplication
+import com.example.binder.bearer
 import com.example.binder.currentUser
 import com.example.binder.databinding.FragmentProfileBinding
-import com.example.binder.bearer
+import com.example.binder.setBitmap
 import com.example.binder.ui.rv.GiveawayAdapter
 import com.example.binder.userGiveaways
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+
 import android.widget.Toast
-import java.io.ByteArrayOutputStream
 import android.net.Uri
 import android.graphics.BitmapFactory
 import java.io.FileNotFoundException
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
-import android.provider.MediaStore
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
+import java.io.ByteArrayOutputStream
 
 class ProfileFragment : Fragment() {
 
@@ -51,10 +56,15 @@ class ProfileFragment : Fragment() {
 
 
     private lateinit var profilePhotoImageView: ImageView
+
+    private var profilePhotoByteArray: ByteArray? = null
+    private var isEditMode: Boolean = false
+
     companion object {
         private const val REQUEST_CODE_PICK_IMAGE = 1
         private const val REQUEST_CODE_TAKE_PICTURE = 2
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("CheckResult")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,7 +79,7 @@ class ProfileFragment : Fragment() {
         profileName = binding.profileName
         profilePersonal = binding.profilePersonalInfo
 
-        profilePhotoImageView = binding.profilePhoto // мое
+        profilePhotoImageView = binding.profilePhoto
 
         editIcon = binding.profileEditIcon
         saveIcon = binding.profileSaveIcon
@@ -86,9 +96,11 @@ class ProfileFragment : Fragment() {
             saveIcon.setVisible(true)
             profileName.setEditable(true)
             profilePersonal.setEditable(true)
+            isEditMode = true
         }
         saveIcon.setOnClickListener {
             if (profileName.text.isBlank()) return@setOnClickListener
+            isEditMode = false
             val name = profileName.text.toString()
             val personal = profilePersonal.text.toString()
             saveIcon.setVisible(false)
@@ -107,12 +119,14 @@ class ProfileFragment : Fragment() {
         updateUI()
         getGiveaways()
         profilePhotoImageView.setOnClickListener {
+            if (!isEditMode) return@setOnClickListener
             openImageSourceSelectionDialog()
         }
 
         return root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("CheckResult")
     private fun getGiveaways() {
         BinderApplication.instance.binderApi.getGiveaways(bearer())
@@ -125,9 +139,11 @@ class ProfileFragment : Fragment() {
             }, { ErrorUtils.showMessage(it, this.requireContext()) })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateUI() {
         profileName.setText(currentUser.name)
         profilePersonal.setText(currentUser.personal)
+        profilePhotoImageView.setBitmap(currentUser.photo)
         giveawayAdapter.setData(userGiveaways)
         bookRV.layoutManager = LinearLayoutManager(context)
         bookRV.adapter = giveawayAdapter
@@ -170,6 +186,9 @@ class ProfileFragment : Fragment() {
                         imageBitmap?.let {
                             if (checkImageSize(it)) {
                                 profilePhotoImageView.setImageBitmap(it)
+                                val stream = ByteArrayOutputStream()
+                                it.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                                profilePhotoByteArray = stream.toByteArray()
                             } else {
                                 Toast.makeText(requireContext(), "Image size should not exceed 5 MB", Toast.LENGTH_SHORT).show()
                             }
@@ -181,6 +200,9 @@ class ProfileFragment : Fragment() {
                     imageBitmap?.let {
                         if (checkImageSize(it)) {
                             profilePhotoImageView.setImageBitmap(it)
+                            val stream = ByteArrayOutputStream()
+                            it.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                            profilePhotoByteArray = stream.toByteArray()
                         } else {
                             Toast.makeText(requireContext(), "Image size should not exceed 5 MB", Toast.LENGTH_SHORT).show()
                         }

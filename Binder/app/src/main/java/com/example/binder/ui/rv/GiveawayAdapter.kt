@@ -3,6 +3,7 @@ package com.example.binder.ui.rv
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +23,8 @@ import com.example.binder.bearer
 import com.example.binder.model.Book
 import com.example.binder.model.Giveaway
 import com.example.binder.model.toInfoStr
+import com.example.binder.setBitmap
+import com.example.binder.ui.profile.setEditable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -33,6 +37,7 @@ class GiveawayAdapter(val context: Context) : RecyclerView.Adapter<BookViewHolde
         notifyDataSetChanged()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return BookViewHolder(inflater.inflate(R.layout.giveaway_item, parent, false)).apply {
@@ -40,9 +45,14 @@ class GiveawayAdapter(val context: Context) : RecyclerView.Adapter<BookViewHolde
                 val giveaway = data[this.adapterPosition]
                 editGiveaway(giveaway)
             }
+            itemView.findViewById<View>(R.id.giveaway_item).setOnClickListener {
+                val giveaway = data[this.adapterPosition]
+                showGiveaway(giveaway)
+            }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun editGiveaway(giveaway: Giveaway) {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.popup_edit_book, null)
@@ -52,6 +62,7 @@ class GiveawayAdapter(val context: Context) : RecyclerView.Adapter<BookViewHolde
         val bookDescET: EditText = view.findViewById(R.id.new_book_description)
         val giveawayDescET: EditText = view.findViewById(R.id.new_book_giveaway_description)
         val suggestRV: RecyclerView = view.findViewById(R.id.suggest_books_rv)
+        val bookPhoto: ImageView = view.findViewById(R.id.new_book_photo)
 
         var bookSet = false
         lateinit var bookAdapter: BookAdapter
@@ -89,6 +100,7 @@ class GiveawayAdapter(val context: Context) : RecyclerView.Adapter<BookViewHolde
         bookYearET.setText(giveaway.book.year.toString())
         bookDescET.setText(giveaway.book.description)
         giveawayDescET.setText(giveaway.description)
+        bookPhoto.setBitmap(giveaway.photo)
 
         bookTitleET.addTextChangedListener { if (bookSet) bookSet = false else suggestBooks(it.toString()) }
 
@@ -105,6 +117,39 @@ class GiveawayAdapter(val context: Context) : RecyclerView.Adapter<BookViewHolde
                 // send to edit
             }
         }
+        alertDialog.show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showGiveaway(giveaway: Giveaway) {
+        val inflater = LayoutInflater.from(context)
+        val view = inflater.inflate(R.layout.popup_edit_book, null)
+        val bookTitleET: EditText = view.findViewById(R.id.new_book_title)
+        val bookAuthorET: EditText = view.findViewById(R.id.new_book_author_name)
+        val bookYearET: EditText = view.findViewById(R.id.new_book_year)
+        val bookDescET: EditText = view.findViewById(R.id.new_book_description)
+        val giveawayDescET: EditText = view.findViewById(R.id.new_book_giveaway_description)
+        val bookPhoto: ImageView = view.findViewById(R.id.new_book_photo)
+
+
+        bookTitleET.setText(giveaway.book.title)
+        bookAuthorET.setText(giveaway.book.author)
+        bookYearET.setText(giveaway.book.year.toString())
+        bookDescET.setText(giveaway.book.description)
+        giveawayDescET.setText(giveaway.description)
+        bookPhoto.setBitmap(giveaway.photo)
+
+        bookTitleET.setEditable(false)
+        bookAuthorET.setEditable(false)
+        bookYearET.setEditable(false)
+        bookDescET.setEditable(false)
+        giveawayDescET.setEditable(false)
+
+        val alertDialog = AlertDialog.Builder(context).apply {
+            setView(view)
+            setCancelable(false)
+            setPositiveButton(R.string.ok, null)
+        }.create()
         alertDialog.show()
     }
 

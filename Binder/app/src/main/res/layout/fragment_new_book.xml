@@ -16,13 +16,13 @@
             android:id="@+id/new_book_title"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_margin="24dp"
             android:hint="@string/book_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/new_book_photo"
+            app:layout_constraintEnd_toStartOf="@+id/new_book_photo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <EditText
             android:id="@+id/new_book_author_name"
@@ -44,16 +44,6 @@
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/suggest_books_rv" />
-
-        <EditText
-            android:id="@+id/new_book_location"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_margin="24dp"
-            android:hint="@string/giveaway_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_book_giveaway_description" />
 
         <EditText
             android:id="@+id/new_book_description"
@@ -86,13 +76,10 @@
             android:layout_marginStart="48dp"
             android:layout_marginEnd="48dp"
             android:layout_marginBottom="24dp"
-            android:layout_marginTop="24dp"
             android:text="@string/submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_book_location"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/suggest_books_rv"
@@ -102,8 +89,17 @@
             android:maxHeight="110dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_book_title"
+            app:layout_constraintTop_toBottomOf="@+id/new_book_photo"
             tools:itemCount="2"
             tools:listitem="@layout/book_item" />
+
+        <ImageView
+            android:id="@+id/new_book_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/book" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
