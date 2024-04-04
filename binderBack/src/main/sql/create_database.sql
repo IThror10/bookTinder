@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS Reader (
     name VARCHAR(255) NOT NULL,
     login VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
+    year INT NOT NULL,
     photo oid
 );
 
@@ -11,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Book (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
-    edition VARCHAR(255),
+    year INT NOT NULL,
     description TEXT
 );
 

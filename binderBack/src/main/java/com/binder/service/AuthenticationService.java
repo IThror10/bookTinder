@@ -6,6 +6,7 @@ import com.binder.request.AuthorizeUserRequest;
 import com.binder.request.RegisterUserRequest;
 import com.binder.response.UserInfoResponse;
 import com.binder.response.UserTokenResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,6 +22,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
+    @Transactional
     public UserTokenResponse signUp(RegisterUserRequest request) {
 
         User user = User.builder()
@@ -35,6 +37,7 @@ public class AuthenticationService {
         return new UserTokenResponse(new UserInfoResponse(user), jwt);
     }
 
+    @Transactional
     public UserTokenResponse signIn(AuthorizeUserRequest request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

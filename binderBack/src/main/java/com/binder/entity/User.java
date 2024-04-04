@@ -34,6 +34,10 @@ public class User implements UserDetails {
 
     @Column(name = "contacts", nullable = false)
     private String contacts;
+
+    @Column(name = "year", nullable = false)
+    private Integer year;
+
     @Lob
     @Column(name = "photo")
     private byte[] photo;

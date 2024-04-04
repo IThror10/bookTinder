@@ -24,7 +24,8 @@ public class UserInfoResponse {
 
     public UserInfoResponse(User user) {
         userId = user.getId();
-        year = 2000;
+        year = user.getYear();
+        photo = user.getPhoto();
         personal = user.getContacts();
         name = user.getName();
     }
