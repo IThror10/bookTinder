@@ -3,6 +3,7 @@ package com.example.binder.login
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -39,12 +40,13 @@ class LoginActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    Log.i("loginned", it.toString())
                     val intent = Intent(this, MainActivity::class.java)
                     userToken = it.jsonAuth
                     currentUser = it.userData
                     startActivity(intent)
                     finish()
-                }, { ErrorUtils.showMessage(it, this) })
+                }, { ErrorUtils.showMessage(it, this, "loginUser") })
         }
         signUp.setOnClickListener {
             val intent = Intent(this, NewUserActivity::class.java)

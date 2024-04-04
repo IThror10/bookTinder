@@ -90,7 +90,7 @@ class GiveawayAdapter(val context: Context) : RecyclerView.Adapter<BookViewHolde
                 .subscribe({
                     updateUI(it)
                     Log.i("Suggested books!", it.toString())
-                }, { ErrorUtils.showMessage(it, context) })
+                }, { ErrorUtils.showMessage(it, context, "getSuggestedBooks") })
         }
 
         bookAdapter = BookAdapter{chooseBook(it)}

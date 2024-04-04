@@ -80,5 +80,6 @@ data class LoginRegUserResponse(
 
 data class UpdateUserRequest(
     @field:Json(name = "personal") val personal: String,
-    @field:Json(name = "name") val name: String
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "photo") val photo: String? = null,
 )

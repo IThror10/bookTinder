@@ -13,9 +13,9 @@ import android.widget.Toast
 object ErrorUtils {
 
     @SuppressLint("InflateParams")
-    fun showMessage(e: Throwable, context: Context) {
+    fun showMessage(e: Throwable, context: Context, where: String) {
         val mes = e.toString()
-        Log.e("Error: ", mes)
+        Log.e("Error in $where: ", mes)
 
         val layout: View = LayoutInflater.from(context).inflate(R.layout.layout_error, null)
         val text = layout.findViewById<View>(R.id.text_error) as TextView

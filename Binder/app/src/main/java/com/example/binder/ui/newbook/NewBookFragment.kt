@@ -89,14 +89,14 @@ class NewBookFragment : Fragment() {
             if (giveawayDescET.text.isBlank()) return@setOnClickListener
             val book =
                 Book(-1, bookTitleET.str(), bookAuthorET.str(), bookYearET.int(), bookDescET.str())
-            val str = Base64.getEncoder().encodeToString(bookPhotoByteArray)
-            val giveaway = Giveaway(-1, currentUser.userId, giveawayDescET.str(), book, str)
+            val photoB64 = bookPhotoByteArray?.let { Base64.getEncoder().encodeToString(it) }
+            val giveaway = Giveaway(-1, currentUser.userId, giveawayDescET.str(), book, photoB64)
             BinderApplication.instance.binderApi.createGiveaway(bearer(), giveaway)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Log.i("Created giveaway!", it.toString())
-                }, { ErrorUtils.showMessage(it, this.requireContext()) })
+                }, { ErrorUtils.showMessage(it, this.requireContext(), "createGiveaway") })
         }
         bookTitleET.addTextChangedListener { if (bookSet) bookSet = false else suggestBooks(it.toString()) }
         bookPhoto.setOnClickListener {
@@ -114,7 +114,7 @@ class NewBookFragment : Fragment() {
             .subscribe({
                 updateUI(it)
                 Log.i("Suggested books!", it.toString())
-            }, { ErrorUtils.showMessage(it, this.requireContext()) })
+            }, { ErrorUtils.showMessage(it, this.requireContext(), "getSuggestedBooks") })
     }
 
     private fun updateUI(books: List<Book>) {

@@ -2,6 +2,7 @@ package com.example.binder
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import com.example.binder.app.BinderApplication
 import com.example.binder.model.Book
 import com.example.binder.model.Giveaway
@@ -21,6 +22,8 @@ fun getAuthInfo(context: Context, updateUI: () -> Unit) {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
+            Log.i("getAuthInfo", it.toString())
+            currentUser = it
             updateUI()
-        }, { ErrorUtils.showMessage(it, context) })
+        }, { ErrorUtils.showMessage(it, context, "getAuthInfo") })
 }

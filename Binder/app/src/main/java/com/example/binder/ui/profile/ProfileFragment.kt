@@ -34,9 +34,11 @@ import io.reactivex.schedulers.Schedulers
 import android.widget.Toast
 import android.net.Uri
 import android.graphics.BitmapFactory
+import com.example.binder.getAuthInfo
 import java.io.FileNotFoundException
 
 import java.io.ByteArrayOutputStream
+import java.util.Base64
 
 class ProfileFragment : Fragment() {
 
@@ -107,21 +109,25 @@ class ProfileFragment : Fragment() {
             editIcon.setVisible(true)
             profileName.setEditable(false)
             profilePersonal.setEditable(false)
-            val req = UpdateUserRequest(personal, name)
+            val photoB64 = profilePhotoByteArray?.let { Base64.getEncoder().encodeToString(it) }
+            val req = UpdateUserRequest(personal, name, photoB64)
             BinderApplication.instance.binderApi.updateUser(bearer(), req)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    Log.i("update user", it.toString())
                     currentUser = it
                     updateUI()
-                }, { ErrorUtils.showMessage(it, this.requireContext()) })
+                }, { ErrorUtils.showMessage(it, this.requireContext(), "updateUser") })
+        }
+        profilePhotoImageView.setOnClickListener {
+            if (!isEditMode) {
+                // Тут можно сделать чтобы фото во весь экран открывалось
+            } else openImageSourceSelectionDialog()
         }
         updateUI()
         getGiveaways()
-        profilePhotoImageView.setOnClickListener {
-            if (!isEditMode) return@setOnClickListener
-            openImageSourceSelectionDialog()
-        }
+        getAuthInfo(requireContext(), this::updateUI)
 
         return root
     }
@@ -136,7 +142,7 @@ class ProfileFragment : Fragment() {
                 userGiveaways = it
                 Log.i("Get giveaways!", it.toString())
                 updateUI()
-            }, { ErrorUtils.showMessage(it, this.requireContext()) })
+            }, { ErrorUtils.showMessage(it, this.requireContext(), "getGiveaways") })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

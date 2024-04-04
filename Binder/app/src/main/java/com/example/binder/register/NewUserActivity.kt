@@ -3,6 +3,7 @@ package com.example.binder.register
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import com.example.binder.MainActivity
 import com.example.binder.R
 import com.example.binder.api.RegisterUserReq
 import com.example.binder.app.BinderApplication
+import com.example.binder.currentUser
 import com.example.binder.userToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -43,11 +45,13 @@ class NewUserActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    Log.i("registered", it.toString())
                     val intent = Intent(this, MainActivity::class.java)
+                    currentUser = it.userData
                     userToken = it.jsonAuth
                     startActivity(intent)
                     finish()
-                }, { ErrorUtils.showMessage(it, this) })
+                }, { ErrorUtils.showMessage(it, this, "registerUser") })
         }
     }
 }
