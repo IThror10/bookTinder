@@ -15,7 +15,7 @@ public class UserInfoResponse {
     @Schema(description = "Год рождения", example = "2010")
     Integer year;
     @Schema(description = "Информация о пользователе", example = "Вы можете связаться со мной в tg @IThror")
-    String personal;
+    String contacts;
     @Schema(description = "Имя пользователя", example = "8-2000")
     String name;
     @Schema(description = "Фотография пользователя")
@@ -25,7 +25,7 @@ public class UserInfoResponse {
         userId = user.getId();
         year = user.getYear();
         photo = user.getPhoto();
-        personal = user.getContacts();
+        contacts = user.getContacts();
         name = user.getName();
     }
 }

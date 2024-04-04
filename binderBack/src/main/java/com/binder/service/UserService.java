@@ -39,7 +39,7 @@ public class UserService {
     public UserInfoResponse updateUserInfo(Long userId, ChangeUserDataRequest request) {
         User user = repository.findById(userId).orElseThrow(() -> new RuntimeException("Unexpected error"));
         user.setName(request.name());
-        user.setContacts(request.personal());
+        user.setContacts(request.contacts());
         user.setYear(request.year());
         if (request.photo() != null)
             user.setPhoto(request.photo());

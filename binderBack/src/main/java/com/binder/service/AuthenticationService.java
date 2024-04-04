@@ -29,7 +29,8 @@ public class AuthenticationService {
                 .username(request.login())
                 .password(passwordEncoder.encode(request.password()))
                 .name(request.name())
-                .contacts(request.personal())
+                .contacts(request.contacts())
+                .year(request.year())
                 .build();
 
         userService.create(user);

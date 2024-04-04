@@ -19,7 +19,7 @@ public record RegisterUserRequest(
         String password,
 
         @Schema(description = "Персональная информация", example = "tg: IThror")
-        String personal,
+        String contacts,
 
         @Schema(description = "Год рождения", example = "2010")
         Integer year
