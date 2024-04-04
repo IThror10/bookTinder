@@ -32,11 +32,10 @@ public class GiveAwayService {
     @Transactional
     public Book addBook(BookRequest request) {
 
-        Optional<Book> optionalBook = bookRepository.findByTitleAndAuthorAndDescriptionAndYear(
+        Optional<Book> optionalBook = bookRepository.findByTitleAndAuthorAndDescription(
                 request.title(),
                 request.author(),
-                request.description(),
-                request.year()
+                request.description()
         );
         Book book;
 

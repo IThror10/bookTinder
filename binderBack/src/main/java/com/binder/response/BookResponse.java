@@ -24,7 +24,7 @@ public class BookResponse {
     @Schema(description = "Описание книги")
     private String description;
 
-    BookResponse(Book book) {
+    public BookResponse(Book book) {
         id = book.getId();
         title = book.getTitle();
         author = book.getAuthor();

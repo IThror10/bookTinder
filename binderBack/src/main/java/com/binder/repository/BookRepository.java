@@ -16,5 +16,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         "FROM Book b WHERE lower(b.title) LIKE lower(concat('%', :name, '%'))")
     List<BookResponse> searchBooksLike(@Param("name") String name);
 
-    Optional<Book> findByTitleAndAuthorAndDescriptionAndYear(String title, String author, String description, Integer year);
+    Optional<Book> findByTitleAndAuthorAndDescription(String title, String author, String description);
 }
