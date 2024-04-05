@@ -81,12 +81,12 @@ public class GiveAwayService {
     @Transactional
     public List<GiveAwayResponse> getAvailableAdvertisements(Long uid) {
         Set<GiveAway> foundNew = giveAwayRepository.getAvailableUnreadGiveAway(uid);
+        Set<GiveAway> tryMatch = giveAwayRepository.getMatchedUs(uid);
+        Set<GiveAway> similar = giveAwayRepository.getRecommendPrediction(uid);
 
+        foundNew.addAll(tryMatch);
+        foundNew.addAll(similar);
         return foundNew.stream().map(GiveAwayResponse::new).collect(Collectors.toList());
-//        Set<GiveAwayResponse> likedUs = matchResultRepository.likedUs(uid);
-//        return likedUs.stream()
-//                .filter(el -> found.stream().anyMatch(cur -> cur.getId().equals(el.getId())))
-//                .collect(Collectors.toSet());
     }
 
     @Transactional
