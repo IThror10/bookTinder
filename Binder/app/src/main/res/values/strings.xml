@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">Binder</string>
+    <string name="user_name">User Name</string>
+    <string name="personal_info">Contact Info</string>
+    <string name="author_book_name">Author/Book Name</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Binder</string>
+    <string name="nav_header_subtitle">Tinder but for books</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_profile">Profile</string>
+    <string name="menu_matches">My Matches</string>
+    <string name="menu_new_book">New Book</string>
+    <string name="partner_book_name">Partner book name</string>
+    <string name="ok">OK</string>
+    <string name="book_title">Book Title</string>
+    <string name="name">Name</string>
+    <string name="year">Year</string>
+    <string name="submit">Submit</string>
+    <string name="author_name">Author Name</string>
+    <string name="giveaway_location">Giveaway location</string>
+
+
+    <string name="hint_log">Username</string>
+    <string name="hint_pas">Password</string>
+    <string name="login">Login</string>
+    <string name="sign">Sign in</string>
+    <string name="register">Sign up</string>
+    <string name="reg">Register</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_personal">Contacts</string>
+    <string name="hint_year">Year</string>
+    <string name="like">Like</string>
+    <string name="book_description">Book Description</string>
+    <string name="menu_swipe">Swipe</string>
+    <string name="giveaway_description">Giveaway description</string>
+    <string name="book_author">Book Author</string>
+    <string name="book_year">Book Year</string>
+    <string name="you_haven_t_any_giveaways">You haven\'t any giveaways</string>
+    <string name="no_more_swipes">No more swipes!</string>
+    <string name="you_haven_t_any_matches">You haven\'t any matches :(</string>
+    <string name="password">Password</string>
 </resources>

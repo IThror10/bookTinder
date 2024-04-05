@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.swipe.SwipeFragment">
+
+    <ImageView
+        android:id="@+id/book_photo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/book"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@color/green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <ImageView
+            android:id="@+id/like"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="24dp"
+            android:src="@drawable/like"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/dislike"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="24dp"
+            android:src="@drawable/favorite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/book_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/red_book"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dislike"
+            app:layout_constraintStart_toEndOf="@+id/like"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/pink_book1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/pink_book"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/like"
+            app:layout_constraintStart_toStartOf="@+id/like" />
+
+        <ImageView
+            android:id="@+id/pink_book2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/pink_book"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/dislike"
+            app:layout_constraintEnd_toEndOf="@+id/dislike" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/swipe_book_author"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="24dp"
+        android:text="@string/book_author"
+        android:maxLines="2"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/book_photo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/swipe_book_year"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_margin="24dp"
+        android:text="@string/book_year"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/book_photo"
+        app:layout_constraintTop_toBottomOf="@+id/swipe_book_author" />
+
+    <TextView
+        android:id="@+id/swipe_book_title"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_margin="24dp"
+        android:text="@string/book_title"
+        android:maxLines="2"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/book_photo" />
+
+    <TextView
+        android:id="@+id/swipe_book_description"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_margin="24dp"
+        android:text="@string/book_description"
+        android:scrollbars="vertical"
+        android:maxLines="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipe_book_title" />
+
+    <TextView
+        android:id="@+id/giveaway_book_description"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_margin="24dp"
+        android:text="@string/giveaway_description"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipe_book_description" />
+
+    <TextView
+        android:id="@+id/no_current_swipe"
+        style="@style/SimpleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/no_more_swipes"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

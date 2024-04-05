@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.ProfileFragment">
+
+    <ImageView
+        android:id="@+id/profile_photo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/avatar" />
+
+    <EditText
+        android:id="@+id/profile_name"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:hint="@string/user_name"
+        android:inputType="textMultiLine"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_photo"
+        app:layout_constraintEnd_toStartOf="@+id/profile_photo"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/profile_personal_info"
+        style="@style/SimpleText"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="24dp"
+        android:gravity="start|top"
+        android:hint="@string/personal_info"
+        android:inputType="textMultiLine"
+        android:maxLines="5"
+        app:layout_constraintEnd_toEndOf="@+id/profile_photo"
+        app:layout_constraintStart_toStartOf="@+id/profile_name"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profile_rv_books"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_personal_info" />
+
+    <ImageView
+        android:id="@+id/profile_edit_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_edit"
+        android:layout_margin="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/profile_save_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_save"
+        android:layout_margin="24dp"
+        app:layout_constraintStart_toEndOf="@+id/profile_edit_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/no_giveaways"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/you_haven_t_any_giveaways"
+        style="@style/SimpleText"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_rv_books"
+        app:layout_constraintEnd_toEndOf="@+id/profile_rv_books"
+        app:layout_constraintStart_toStartOf="@+id/profile_rv_books"
+        app:layout_constraintTop_toTopOf="@+id/profile_rv_books" />
+
+    <ProgressBar
+        android:id="@+id/giveaways_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_rv_books"
+        app:layout_constraintEnd_toEndOf="@+id/profile_rv_books"
+        app:layout_constraintStart_toStartOf="@+id/profile_rv_books"
+        app:layout_constraintTop_toTopOf="@+id/profile_rv_books" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
